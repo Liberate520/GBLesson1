@@ -1,5 +1,6 @@
 package ru.gb.family_tree.human;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +8,16 @@ public class Human {
     private long id;
     private String name;
     private String surname;
+    private LocalDate birthday;
     private Gender gender;
     private Human spouse;
     private List<Human> parents;
     private List<Human> children;
 
-    public Human(String name, String surname, Gender gender) {
+    public Human(String name, String surname, LocalDate birthday, Gender gender) {
         this.name = name;
         this.surname = surname;
+        this.birthday = birthday;
         this.gender = gender;
         this.children = new ArrayList<>();
         this.parents = new ArrayList<>();
@@ -82,7 +85,8 @@ public class Human {
         sb.append("Член семьи " +
                 "№ = " + id +
                 ", Имя -> " + name +
-                ", Фамилия -> " + surname);
+                ", Фамилия -> " + surname +
+                ", дата рождения -> " + birthday);
         if (spouse != null) {
             sb.append(", супруг(-а) -> " + spouse.getName() + " " + spouse.getSurname());
         } else {

@@ -4,28 +4,32 @@ import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.tree.FamilyTree;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         FamilyTree familyTree = new FamilyTree();
-        Human parent1 = familyTree.addHuman(new Human("Sergei", "Ivanov", Gender.Male));
-        Human parent2 = familyTree.addHuman(new Human("Natalia", "Ivanova", Gender.Female));
+        Human parent1 = familyTree.addHuman(new Human("Sergei", "Ivanov", LocalDate.parse("20.11.1961", formatter), Gender.Male));
+        Human parent2 = familyTree.addHuman(new Human("Natalia", "Ivanova", LocalDate.parse("09.03.1965", formatter), Gender.Female));
 
         familyTree.addSpouse(parent1.getId(), parent2.getId());
 
-        Human human = familyTree.addHuman(new Human("Alex", "Ivanov", Gender.Male));
+        Human human = familyTree.addHuman(new Human("Alex", "Ivanov", LocalDate.parse("12.06.1986", formatter), Gender.Male));
 
         familyTree.addChildren(parent1.getId(), Arrays.asList(human));
         familyTree.addChildren(parent2.getId(), Arrays.asList(human));
         familyTree.addParents(human.getId(), Arrays.asList(parent1, parent2));
 
-        Human wife = familyTree.addHuman(new Human("Sveta", "Petrova", Gender.Female));
+        Human wife = familyTree.addHuman(new Human("Sveta", "Petrova", LocalDate.parse("07.05.1990", formatter), Gender.Female));
 
         familyTree.addSpouse(human.getId(), wife.getId());
 
-        Human child1 = familyTree.addHuman(new Human("Olga", "Ivanova", Gender.Female));
-        Human child2 = familyTree.addHuman(new Human("Petr", "Ivanov", Gender.Male));
+        Human child1 = familyTree.addHuman(new Human("Olga", "Ivanova", LocalDate.parse("14.09.2019", formatter), Gender.Female));
+        Human child2 = familyTree.addHuman(new Human("Petr", "Ivanov", LocalDate.parse("22.12.2021", formatter), Gender.Male));
 
         familyTree.addChildren(human.getId(), Arrays.asList(child1, child2));
         familyTree.addChildren(wife.getId(), Arrays.asList(child1, child2));
