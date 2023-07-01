@@ -1,2 +1,5 @@
-package GBLesson1.src.ru.gb.FamilyTree.Human;public enum MotFath {
+package GBLesson1.src.ru.gb.FamilyTree.Human;
+
+public enum MotFath {
+    Father, Mother, Child;
 }
