@@ -1,10 +1,10 @@
 package ru.gb.family_tree;
 
+import ru.gb.family_tree.handler.FileHandler;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.tree.FamilyTree;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -38,5 +38,11 @@ public class Main {
 
         System.out.println("Такое получилось дерево: ");
         familyTree.getHumanList().stream().forEach(System.out::println);
+
+        FileHandler fileHandler = new FileHandler("data.txt");
+        fileHandler.save(familyTree);
+
+        System.out.println("Проверка сохранения:");
+        fileHandler.read().getHumanList().stream().forEach(System.out::println);
     }
 }

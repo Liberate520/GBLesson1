@@ -2,12 +2,13 @@ package ru.gb.family_tree.tree;
 
 import ru.gb.family_tree.human.Human;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private long treeId;
     private long humanId;
     private List<Human> humanList;
@@ -50,8 +51,7 @@ public class FamilyTree {
                 .peek(h -> getHumanParents(id).add(h))
                 .collect(Collectors.toList()));
         System.out.println("Список родителей у " + getHuman(id).getName() + " " + getHuman(id).getSurname()
-                + " обновлен:");
-        //getHumanParents(id).forEach(System.out::println);
+                + " обновлен!");
     }
 
     public void addChildren(long id, List<Human> children) {
@@ -60,8 +60,7 @@ public class FamilyTree {
                 .peek(h -> getHumanChildren(id).add(h))
                 .collect(Collectors.toList()));
         System.out.println("Список детей у " + getHuman(id).getName() + " " + getHuman(id).getSurname()
-                + " обновлен:");
-        //getHumanChildren(id).forEach(System.out::println);
+                + " обновлен!");
     }
 
     public void removeHuman(long id) {
