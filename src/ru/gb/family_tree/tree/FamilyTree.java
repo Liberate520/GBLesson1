@@ -16,7 +16,7 @@ public class FamilyTree implements Serializable {
     public FamilyTree() {
         this.treeId = new Random().nextInt(10000);
         this.humanList = new ArrayList<>();
-        System.out.println("Зарегистрировано семейно древо: " + this);
+        System.out.println("Зарегистрировано семейно древо: " + this.treeId);
     }
 
     public List<Human> getHumanList() {
