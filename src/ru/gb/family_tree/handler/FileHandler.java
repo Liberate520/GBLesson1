@@ -5,7 +5,7 @@ import ru.gb.family_tree.tree.FamilyTree;
 import java.io.*;
 
 public class FileHandler implements Writable {
-    String path;
+    private String path;
 
     public FileHandler(String path) {
         this.path = path;

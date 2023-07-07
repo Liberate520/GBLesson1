@@ -1,14 +1,15 @@
 package ru.gb.family_tree.tree;
 
 import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.human.comparator.HumanComparatorByBirthday;
+import ru.gb.family_tree.human.comparator.HumanComparatorByChildren;
+import ru.gb.family_tree.human.comparator.HumanComparatorByName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private long treeId;
     private long humanId;
     private List<Human> humanList;
@@ -113,10 +114,27 @@ public class FamilyTree implements Serializable {
         System.out.println("Брак " + getHuman(id).getName() + " " + getHuman(id).getSurname() + " расторгнут!");
     }
 
+    public List<Human> getHumanWithSortByBirthday() {
+        return humanList.stream().sorted(new HumanComparatorByBirthday()).collect(Collectors.toList());
+    }
+
+    public List<Human> getHumanWithSortByChildren() {
+        return humanList.stream().sorted(new HumanComparatorByChildren()).collect(Collectors.toList());
+    }
+
+    public List<Human> getHumanWithSortByName() {
+        return humanList.stream().sorted(new HumanComparatorByName()).collect(Collectors.toList());
+    }
+
     @Override
     public String toString() {
         return "FamilyTree{" +
                 "treeId=" + treeId +
                 '}';
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humanList);
     }
 }

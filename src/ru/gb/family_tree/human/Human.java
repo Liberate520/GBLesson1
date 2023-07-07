@@ -80,6 +80,10 @@ public class Human implements Serializable {
         this.spouse = spouse;
     }
 
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

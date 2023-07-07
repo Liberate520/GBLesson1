@@ -14,7 +14,7 @@ public class Main {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         FamilyTree familyTree = new FamilyTree();
         Human parent1 = familyTree.addHuman(new Human("Sergei", "Ivanov", LocalDate.parse("20.11.1961", formatter), Gender.Male));
-        Human parent2 = familyTree.addHuman(new Human("Natalia", "Ivanova", LocalDate.parse("09.03.1965", formatter), Gender.Female));
+        Human parent2 = familyTree.addHuman(new Human("Natalia", "Ivanova", LocalDate.parse("09.03.1961", formatter), Gender.Female));
 
         familyTree.addSpouse(parent1.getId(), parent2.getId());
 
@@ -28,8 +28,8 @@ public class Main {
 
         familyTree.addSpouse(human.getId(), wife.getId());
 
-        Human child1 = familyTree.addHuman(new Human("Olga", "Ivanova", LocalDate.parse("14.09.2019", formatter), Gender.Female));
-        Human child2 = familyTree.addHuman(new Human("Petr", "Ivanov", LocalDate.parse("22.12.2021", formatter), Gender.Male));
+        Human child1 = familyTree.addHuman(new Human("Olga", "Ivanova", LocalDate.parse("14.09.2021", formatter), Gender.Female));
+        Human child2 = familyTree.addHuman(new Human("Petr", "Ivanov", LocalDate.parse("22.12.2019", formatter), Gender.Male));
 
         familyTree.addChildren(human.getId(), Arrays.asList(child1, child2));
         familyTree.addChildren(wife.getId(), Arrays.asList(child1, child2));
@@ -43,6 +43,13 @@ public class Main {
         fileHandler.save(familyTree);
 
         System.out.println("Проверка сохранения:");
-        fileHandler.read().getHumanList().stream().forEach(System.out::println);
+        FamilyTree treeAfterSave = fileHandler.read();
+        treeAfterSave.forEach(System.out::println);
+        System.out.println("Проверка сортировки по дням рождения:");
+        treeAfterSave.getHumanWithSortByBirthday().forEach(System.out::println);
+        System.out.println("Проверка сортировки по количеству детей:");
+        treeAfterSave.getHumanWithSortByChildren().forEach(System.out::println);
+        System.out.println("Проверка сортировки по имени:");
+        treeAfterSave.getHumanWithSortByName().forEach(System.out::println);
     }
 }
