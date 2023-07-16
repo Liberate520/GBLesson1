@@ -105,9 +105,9 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     public void removeSpouse(long id) {
         if (getHuman(id).getSpouse() != null) {
-            if ((getHuman(getHuman(id).getSpouse().getId()).getSpouse() != null)
-                    && ((getHuman(getHuman(id).getSpouse().getId()).getSpouse().getId() == id))) {
-                getHuman(getHuman(id).getSpouse().getId()).setSpouse(null);
+            Human spouse = getHuman(id).getSpouse();
+            if ((spouse != null) && (spouse.getId() == id)) {
+                getHuman(spouse.getId()).setSpouse(null);
             }
             getHuman(id).setSpouse(null);
         }
