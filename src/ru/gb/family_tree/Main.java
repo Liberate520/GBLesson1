@@ -1,8 +1,8 @@
 package ru.gb.family_tree;
 
 import ru.gb.family_tree.handler.FileHandler;
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.tree_elements.Gender;
+import ru.gb.family_tree.tree_elements.Human;
 import ru.gb.family_tree.tree.FamilyTree;
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
         Human parent1 = familyTree.addHuman(new Human("Sergei", "Ivanov", LocalDate.parse("20.11.1961", formatter), Gender.Male));
         Human parent2 = familyTree.addHuman(new Human("Natalia", "Ivanova", LocalDate.parse("09.03.1961", formatter), Gender.Female));
 
@@ -37,7 +37,7 @@ public class Main {
         familyTree.addParents(child2.getId(), Arrays.asList(human, wife));
 
         System.out.println("Такое получилось дерево: ");
-        familyTree.getHumanList().stream().forEach(System.out::println);
+        familyTree.getElementList().stream().forEach(System.out::println);
 
         FileHandler fileHandler = new FileHandler("data.txt");
         fileHandler.save(familyTree);

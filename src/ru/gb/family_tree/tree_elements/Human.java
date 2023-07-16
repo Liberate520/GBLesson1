@@ -1,11 +1,11 @@
-package ru.gb.family_tree.human;
+package ru.gb.family_tree.tree_elements;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Fundamental<Human>, Serializable {
     private long id;
     private String name;
     private String surname;
@@ -24,62 +24,56 @@ public class Human implements Serializable {
         this.parents = new ArrayList<>();
     }
 
+    @Override
     public long getId() {
         return id;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }
 
+    @Override
     public String getName() {
-        return name;
+        StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append(" ");
+        sb.append(surname);
+        return sb.toString();
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
+    @Override
     public List<Human> getParents() {
         return parents;
     }
 
+    @Override
     public void setParents(List<Human> parents) {
         this.parents = parents;
     }
 
+    @Override
     public void setChildren(List<Human> children) {
         this.children = children;
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
     }
 
+    @Override
     public Human getSpouse() {
         return spouse;
     }
 
+    @Override
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
     }
 
+    @Override
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -93,7 +87,7 @@ public class Human implements Serializable {
                 ", Фамилия -> " + surname +
                 ", дата рождения -> " + birthday);
         if (spouse != null) {
-            sb.append(", супруг(-а) -> " + spouse.getName() + " " + spouse.getSurname());
+            sb.append(", супруг(-а) -> " + spouse.getName());
         } else {
             sb.append(", не в браке");
         }

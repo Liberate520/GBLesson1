@@ -1,129 +1,126 @@
 package ru.gb.family_tree.tree;
 
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.human.comparator.HumanComparatorByBirthday;
-import ru.gb.family_tree.human.comparator.HumanComparatorByChildren;
-import ru.gb.family_tree.human.comparator.HumanComparatorByName;
+import ru.gb.family_tree.tree_elements.Fundamental;
+import ru.gb.family_tree.tree_elements.Human;
+import ru.gb.family_tree.tree_elements.comparator.ElementsComparatorByBirthday;
+import ru.gb.family_tree.tree_elements.comparator.ElementsComparatorByChildren;
+import ru.gb.family_tree.tree_elements.comparator.ElementsComparatorByName;
 
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<E extends Fundamental<E>> implements Serializable, Iterable<E> {
     private long treeId;
-    private long humanId;
-    private List<Human> humanList;
+    private long elementId;
+    private List<E> elementList;
 
     public FamilyTree() {
         this.treeId = new Random().nextInt(10000);
-        this.humanList = new ArrayList<>();
+        this.elementList = new ArrayList<>();
         System.out.println("Зарегистрировано семейно древо: " + this.treeId);
     }
 
-    public List<Human> getHumanList() {
-        return humanList;
+    public List<E> getElementList() {
+        return elementList;
     }
 
-    public Human addHuman(Human human) {
-        human.setId(++humanId);
-        humanList.add(human);
-        System.out.println("В дерево добавлен: " + human);
-        return human;
+    public E addHuman(E e) {
+        e.setId(++elementId);
+        elementList.add(e);
+        System.out.println("В дерево добавлен: " + e);
+        return e;
     }
 
-    public Human getHuman(long id) {
-        return humanList.stream().filter(h -> h.getId() == id).findFirst()
+    public E getElement(long id) {
+        return elementList.stream().filter(h -> h.getId() == id).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Члена семьи с идентификатором: " + id + ", не найдено!"));
     }
 
-    public List<Human> getHumanParents(long id) {
-        return humanList.stream().filter(h -> h.getId() == id).findFirst()
+    public List<E> getParents(long id) {
+        return elementList.stream().filter(h -> h.getId() == id).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Члена семьи с идентификатором: " + id + ", не найдено!")).getParents();
     }
 
-    public List<Human> getHumanChildren(long id) {
-        return humanList.stream().filter(h -> h.getId() == id).findFirst()
+    public List<E> getChildren(long id) {
+        return elementList.stream().filter(h -> h.getId() == id).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Члена семьи с идентификатором: " + id + ", не найдено!")).getChildren();
     }
 
-    public void addParents(long id, List<Human> parents) {
-        getHuman(id).setParents(parents.stream()
-                .filter(h -> !getHumanParents(id).contains(h))
-                .peek(h -> getHumanParents(id).add(h))
+    public void addParents(long id, List<E> parents) {
+        getElement(id).setParents(parents.stream()
+                .filter(h -> !getParents(id).contains(h))
+                .peek(h -> getParents(id).add(h))
                 .collect(Collectors.toList()));
-        System.out.println("Список родителей у " + getHuman(id).getName() + " " + getHuman(id).getSurname()
-                + " обновлен!");
+        System.out.println("Список родителей у " + getElement(id).getName() + " обновлен!");
     }
 
-    public void addChildren(long id, List<Human> children) {
-        getHuman(id).setChildren(children.stream()
-                .filter(h -> !getHumanChildren(id).contains(h))
-                .peek(h -> getHumanChildren(id).add(h))
+    public void addChildren(long id, List<E> children) {
+        getElement(id).setChildren(children.stream()
+                .filter(h -> !getChildren(id).contains(h))
+                .peek(h -> getChildren(id).add(h))
                 .collect(Collectors.toList()));
-        System.out.println("Список детей у " + getHuman(id).getName() + " " + getHuman(id).getSurname()
-                + " обновлен!");
+        System.out.println("Список детей у " + getElement(id).getName() + " обновлен!");
     }
 
     public void removeHuman(long id) {
-        getHumanList().stream()
+        getElementList().stream()
                 .peek(h -> {
-                    if (h.getParents().contains(getHuman(id))) {
+                    if (h.getParents().contains(getElement(id))) {
                         h.getParents().remove(h);
                     }
                 });
-        getHumanList().stream()
+        getElementList().stream()
                 .peek(h -> {
-                    if (h.getChildren().contains(getHuman(id))) {
+                    if (h.getChildren().contains(getElement(id))) {
                         h.getChildren().remove(h);
                     }
                 });
-        getHumanList().stream()
+        getElementList().stream()
                 .peek(h -> {
                     if (h.getId() == id) {
-                        getHumanList().remove(h);
+                        getElementList().remove(h);
                     }
                 });
         System.out.println("Член семьи с идентификатором: " + id + ", удален!");
     }
 
     public void addSpouse(long id1, long id2) {
-        if (getHuman(id1).getSpouse() == null) {
-            if (getHuman(id2).getSpouse() == null) {
-                getHuman(id2).setSpouse(getHuman(id1));
-            } else if (getHuman(id2).getSpouse().getId() != id1) {
-                System.out.println(getHuman(id2).getName() + " " + getHuman(id2).getSurname()
-                        + " находится в браке c другим человеком!");
+        if (getElement(id1).getSpouse() == null) {
+            if (getElement(id2).getSpouse() == null) {
+                getElement(id2).setSpouse(getElement(id1));
+            } else if (getElement(id2).getSpouse().getId() != id1) {
+                System.out.println(getElement(id2).getName() + " уже в отношениях!");
             }
-            getHuman(id1).setSpouse(getHuman(id2));
-            System.out.println("Добавлена запись брака: "
-                    + getHuman(id1).getName() + " " + getHuman(id1).getSurname()
-                    + " и " + getHuman(id2).getName() + " " + getHuman(id2).getSurname());
+            getElement(id1).setSpouse(getElement(id2));
+            System.out.println("Добавлена запись отношений: "
+                    + getElement(id1).getName() + " и " + getElement(id2).getName());
         } else {
-            System.out.println(getHuman(id1).getName() + " " + getHuman(id1).getSurname() + " находится в браке!");
+            System.out.println(getElement(id1).getName() + " находится в отношениях!");
         }
     }
 
     public void removeSpouse(long id) {
-        if (getHuman(id).getSpouse() != null) {
-            Human spouse = getHuman(id).getSpouse();
+        if (getElement(id).getSpouse() != null) {
+            Human spouse = (Human) getElement(id).getSpouse();
             if ((spouse != null) && (spouse.getId() == id)) {
-                getHuman(spouse.getId()).setSpouse(null);
+                getElement(spouse.getId()).setSpouse(null);
             }
-            getHuman(id).setSpouse(null);
+            getElement(id).setSpouse(null);
         }
-        System.out.println("Брак " + getHuman(id).getName() + " " + getHuman(id).getSurname() + " расторгнут!");
+        System.out.println("Отношения " + getElement(id).getName() + " прекращены!");
     }
 
-    public List<Human> getHumanWithSortByBirthday() {
-        return humanList.stream().sorted(new HumanComparatorByBirthday()).collect(Collectors.toList());
+    public List<E> getHumanWithSortByBirthday() {
+        return (List<E>) elementList.stream().sorted(new ElementsComparatorByBirthday()).collect(Collectors.toList());
     }
 
-    public List<Human> getHumanWithSortByChildren() {
-        return humanList.stream().sorted(new HumanComparatorByChildren()).collect(Collectors.toList());
+    public List<E> getHumanWithSortByChildren() {
+        return (List<E>) elementList.stream().sorted(new ElementsComparatorByChildren()).collect(Collectors.toList());
     }
 
-    public List<Human> getHumanWithSortByName() {
-        return humanList.stream().sorted(new HumanComparatorByName()).collect(Collectors.toList());
+    public List<E> getHumanWithSortByName() {
+        return (List<E>) elementList.stream().sorted(new ElementsComparatorByName()).collect(Collectors.toList());
     }
 
     @Override
@@ -134,7 +131,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(humanList);
+    public Iterator<E> iterator() {
+        FamilyTreeIterator<E> fi = new FamilyTreeIterator<>(elementList);
+        return fi;
     }
 }
