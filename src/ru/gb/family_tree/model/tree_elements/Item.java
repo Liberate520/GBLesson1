@@ -1,21 +1,21 @@
-package ru.gb.family_tree.tree_elements;
+package ru.gb.family_tree.model.tree_elements;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Fundamental<Human>, Serializable {
+public class Item implements Fundamental<Item>, Serializable {
     private long id;
     private String name;
     private String surname;
     private LocalDate birthday;
     private Gender gender;
-    private Human spouse;
-    private List<Human> parents;
-    private List<Human> children;
+    private Item spouse;
+    private List<Item> parents;
+    private List<Item> children;
 
-    public Human(String name, String surname, LocalDate birthday, Gender gender) {
+    public Item(String name, String surname, LocalDate birthday, Gender gender) {
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
@@ -44,32 +44,32 @@ public class Human implements Fundamental<Human>, Serializable {
     }
 
     @Override
-    public List<Human> getParents() {
+    public List<Item> getParents() {
         return parents;
     }
 
     @Override
-    public void setParents(List<Human> parents) {
+    public void setParents(List<Item> parents) {
         this.parents = parents;
     }
 
     @Override
-    public void setChildren(List<Human> children) {
+    public void setChildren(List<Item> children) {
         this.children = children;
     }
 
     @Override
-    public List<Human> getChildren() {
+    public List<Item> getChildren() {
         return children;
     }
 
     @Override
-    public Human getSpouse() {
+    public Item getSpouse() {
         return spouse;
     }
 
     @Override
-    public void setSpouse(Human spouse) {
+    public void setSpouse(Item spouse) {
         this.spouse = spouse;
     }
 
@@ -109,8 +109,8 @@ public class Human implements Fundamental<Human>, Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Human)) return false;
-        Human human = (Human) o;
+        if (!(o instanceof Item)) return false;
+        Item human = (Item) o;
         return getId() == human.getId();
     }
 }

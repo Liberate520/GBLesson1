@@ -1,9 +1,9 @@
-package ru.gb.family_tree.tree_elements;
+package ru.gb.family_tree.model.tree_elements;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface Fundamental<E extends Fundamental> {
+public interface Fundamental<E> {
 
     long getId();
     void setId(long id);

@@ -1,6 +1,6 @@
-package ru.gb.family_tree.handler;
+package ru.gb.family_tree.service.handler;
 
-import ru.gb.family_tree.tree.FamilyTree;
+import ru.gb.family_tree.model.tree.FamilyTree;
 
 import java.io.*;
 
