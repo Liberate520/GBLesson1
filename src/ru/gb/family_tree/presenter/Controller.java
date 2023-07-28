@@ -57,7 +57,7 @@ public class Controller<E extends Fundamental<E>> implements Functions {
                 .stream()
                 .filter(entry -> line.equals(entry.getValue()))
                 .map(Map.Entry::getKey)
-                .findFirst();7
+                .findFirst();
         Commands commands = result.orElse(null);
         return commands;
     }
