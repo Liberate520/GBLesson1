@@ -1,20 +1,19 @@
-package ru.gb.family_tree.viewer.commands;
+package ru.gb.family_tree.presenter;
 
+import ru.gb.family_tree.model.handler.FileHandler;
 import ru.gb.family_tree.model.tree.FamilyTree;
 import ru.gb.family_tree.model.tree_elements.Fundamental;
 import ru.gb.family_tree.model.tree_elements.Gender;
 import ru.gb.family_tree.model.tree_elements.Item;
-import ru.gb.family_tree.service.handler.Writable;
-import ru.gb.family_tree.service.tree_service.TreeService;
+import ru.gb.family_tree.model.handler.Writable;
+import ru.gb.family_tree.model.tree.tree_service.TreeService;
+import ru.gb.family_tree.presenter.commands.Commands;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
-public class CommandsService<E extends Fundamental<E>> implements CommandsFunction {
+public class Controller<E extends Fundamental<E>> implements Functions {
     private TreeService<E> treeService;
     private Scanner scanner;
     private DateTimeFormatter formatter;
@@ -22,11 +21,11 @@ public class CommandsService<E extends Fundamental<E>> implements CommandsFuncti
 
     private HashMap<Commands, String> commands; //для новой версии терминала необходимо обновить список либо сделать новый
 
-    public CommandsService(Writable writable) {
-        this.writable = writable;
+    public Controller() {
+        this.writable = new FileHandler("data.txt");
         this.commands =new HashMap<>();
         createCommands();
-        this.treeService = new TreeService<E>(new FamilyTree<E>());
+        this.treeService = new TreeService<>(new FamilyTree<E>());
         this.scanner = new Scanner(System.in);
         this.formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     }
@@ -58,7 +57,7 @@ public class CommandsService<E extends Fundamental<E>> implements CommandsFuncti
                 .stream()
                 .filter(entry -> line.equals(entry.getValue()))
                 .map(Map.Entry::getKey)
-                .findFirst();
+                .findFirst();7
         Commands commands = result.orElse(null);
         return commands;
     }
@@ -74,13 +73,29 @@ public class CommandsService<E extends Fundamental<E>> implements CommandsFuncti
                 addItem();
                 break;
             case REMOVE_ITEM:
+                removeItem();
+                break;
             case ADD_PARENTS:
+                addParents();
+                break;
             case GET_PARENTS:
+                getParents();
+                break;
             case ADD_CHILDREN:
+                addChildren();
+                break;
             case GET_CHILDREN:
+                getChildren();
+                break;
             case ADD_SPOUSE:
+                addSpouse();
+                break;
             case REMOVE_SPOUSE:
+                removeSpouse();
+                break;
             case GET_ELEMENT:
+                getItem();
+                break;
             case GET_TREE:
                 getTree();
                 break;
@@ -119,18 +134,82 @@ public class CommandsService<E extends Fundamental<E>> implements CommandsFuncti
         treeService.addElement((E)item);
     }
 
-    private void getTree() {
-        System.out.println("В дереве имеются следующие элементы: ");
-        this.treeService.SortByName().forEach(System.out::println);
+    private void getItem() {
+        System.out.println("Введите ID элемента дерева, информацию по которому хотите получить: ");
+        int id = scanner.nextInt();
+        System.out.println(treeService.getElement(id));
     }
 
-    void save() {
+    private void getTree() {
+        System.out.println("В дереве имеются следующие элементы: ");
+        this.treeService.SortByBirthday().forEach(System.out::println);
+    }
+
+    private void save() {
         writable.save(treeService.getFamilyTree());
         System.out.println("Данные сохранены");
     }
 
-    void load() {
+    private void load() {
         treeService.setFamilyTree(writable.read());
         System.out.println("Данные загружены");
+    }
+
+    private void addParents() {
+        System.out.println("Введите ID элемента дерева, которому добавляются родители: ");
+        int id1 = scanner.nextInt();
+        System.out.println("Введите ID первого родителя: ");
+        int id2  = scanner.nextInt();
+        E parents1 = treeService.getElement(id2);
+        System.out.println("Введите ID второго родителя: ");
+        int id3 = scanner.nextInt();
+        E parents2 = treeService.getElement(id3);
+        List<E> parents = new ArrayList<>();
+        parents.add(parents1);
+        parents.add(parents2);
+        treeService.addParents(id1, parents);
+    }
+
+    private void removeItem() {
+        System.out.println("Введите ID элемента дерева, которой хотите удалить: ");
+        int id = scanner.nextInt();
+        treeService.removeItem(id);
+    }
+
+    private void getParents() {
+        System.out.println("Введите ID элемента дерева, родителей которого хотите посмотреть: ");
+        int id = scanner.nextInt();
+        treeService.getParents(id).forEach(System.out::println);
+    }
+
+    private void addChildren() {
+        System.out.println("Введите ID элемента дерева, которому добавляется ребенок: ");
+        int id1 = scanner.nextInt();
+        System.out.println("Введите ID ребенка: ");
+        int id2  = scanner.nextInt();
+        E child = treeService.getElement(id2);
+        List<E> children = new ArrayList<>();
+        children.add(child);
+        treeService.addChildren(id1, children);
+    }
+
+    private void getChildren() {
+        System.out.println("Введите ID элемента дерева, детей которого хотите посмотреть: ");
+        int id = scanner.nextInt();
+        treeService.getChildren(id).forEach(System.out::println);
+    }
+
+    private void addSpouse() {
+        System.out.println("Введите ID супруга: ");
+        int id1 = scanner.nextInt();
+        System.out.println("Введите ID супруги: ");
+        int id2 = scanner.nextInt();
+        treeService.addSpouse(id1, id2);
+    }
+
+    private void removeSpouse() {
+        System.out.println("Введите ID супруга, отношения которого расторгаются: ");
+        int id = scanner.nextInt();
+        treeService.removeSpouse(id);
     }
 }

@@ -1,4 +1,4 @@
-package ru.gb.family_tree.service.handler;
+package ru.gb.family_tree.model.handler;
 
 import ru.gb.family_tree.model.tree.FamilyTree;
 

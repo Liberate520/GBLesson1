@@ -1,4 +1,4 @@
-package ru.gb.family_tree.service.tree_service;
+package ru.gb.family_tree.model.tree.tree_service;
 
 import ru.gb.family_tree.model.tree_elements.Fundamental;
 

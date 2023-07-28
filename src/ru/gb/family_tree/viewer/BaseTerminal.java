@@ -1,19 +1,22 @@
 package ru.gb.family_tree.viewer;
 
 import ru.gb.family_tree.model.tree_elements.Item;
-import ru.gb.family_tree.service.handler.Writable;
-import ru.gb.family_tree.service.tree_service.TreeService;
-import ru.gb.family_tree.viewer.commands.CommandsService;
+import ru.gb.family_tree.presenter.Controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class BaseTerminal<E extends TreeService> implements Vew {
+public class BaseTerminal implements View {
 
-    private CommandsService<Item> commandsService;
+    private Controller<Item> controller;
+    private List<String> commands;
     private Scanner scanner;
 
-    public BaseTerminal(Writable writable) {
-        this.commandsService = new CommandsService<>(writable);
+    public BaseTerminal() {
+        this.commands = new ArrayList<>();
+        this.controller = new Controller<>();
+        this.commands = createCommands();
         this.scanner = new Scanner(System.in);
     }
 
@@ -22,16 +25,8 @@ public class BaseTerminal<E extends TreeService> implements Vew {
         while (true) {
             menu();
             int command = command(scanner);
-            if (command == 1) {
-                commandsService.doCommand("Активировать новое дерево");
-            } else if (command == 2) {
-                commandsService.doCommand("Добавить элемент дерева");
-            } else if (command == 3) {
-                commandsService.doCommand("Показать все элементы дерева");
-            } else if (command == 4) {
-                commandsService.doCommand("Сохранить изменения");
-            } else if (command == 5) {
-                commandsService.doCommand("Загрузить последние сохраненные изменения");
+            if ((command <= commands.size()) && (command > 0)) {
+                controller.doCommand(commands.get(command - 1));
             } else if (command == 0) {
                 System.out.println("Выход из меню.");
                 break;
@@ -44,11 +39,7 @@ public class BaseTerminal<E extends TreeService> implements Vew {
     private void menu() {
         System.out.println("--------------------------------------------");
         System.out.println("Введите команду:");
-        System.out.println("1 - Активировать новое дерево");
-        System.out.println("2 - Добавить элемент дерева");
-        System.out.println("3 - Показать все элементы дерева");
-        System.out.println("4 - Сохранить изменения");
-        System.out.println("5 - Загрузить последние сохраненные изменения");
+        createMenu();
         System.out.println("0 - Выход");
         System.out.println("--------------------------------------------");
     }
@@ -66,4 +57,17 @@ public class BaseTerminal<E extends TreeService> implements Vew {
         }
         return command;
     }
+
+    private void createMenu() {
+        for (int i = 0; i < commands.size(); i++) {
+            System.out.println((i+1) + " - " + commands.get(i));
+        }
+    }
+
+    private List<String> createCommands() {
+        List<String> list = new ArrayList<>();
+        list.addAll(this.controller.getCommands().values());
+        return list;
+    }
+
 }

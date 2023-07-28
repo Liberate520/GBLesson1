@@ -1,4 +1,4 @@
-package ru.gb.family_tree.service.tree_service;
+package ru.gb.family_tree.model.tree.tree_service;
 
 import ru.gb.family_tree.model.tree.FamilyTree;
 import ru.gb.family_tree.model.tree_elements.Fundamental;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class TreeService<E extends Fundamental<E>> implements BaseFunctions<E>, SortFunctions<E> {
 
-    FamilyTree<E> familyTree;
+    private FamilyTree<E> familyTree;
 
     public TreeService(FamilyTree<E> familyTree) {
         this.familyTree = familyTree;

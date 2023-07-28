@@ -1,4 +1,4 @@
-package ru.gb.family_tree.viewer.commands;
+package ru.gb.family_tree.presenter.commands;
 
 public enum Commands {
     NEW_TREE,
