@@ -2,8 +2,9 @@ package ru.gb.FamilyTree.Trees;
 import java.util.ArrayList;
 import java.util.List;
 import ru.gb.FamilyTree.Humans.Person;
+import java.io.Serializable;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private List<Person> people;
 
     public FamilyTree() {
@@ -12,6 +13,14 @@ public class FamilyTree {
 
     public void addPerson(Person person) {
         people.add(person);
+        List<Person> parents = getParentsOfPerson(person);
+        for (Person parent : parents) {
+            parent.addChild(person);
+        }
+
+        for (Person child : person.getChildren()) {
+            child.addParent(person);
+        }
     }
 
     public List<Person> getParentsOfPerson(Person person) {
@@ -22,5 +31,9 @@ public class FamilyTree {
             }
         }
         return parents;
+    }
+
+    public List<Person> getAllPeople() {
+        return new ArrayList<>(people);
     }
 }

@@ -1,16 +1,22 @@
 package ru.gb.FamilyTree.Humans;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class Person {
+public class Person implements Serializable {
     private String fullName;
-    private String birthDate;
+    private LocalDate birthDate;
+    private LocalDate deathDate;
     private List<Person> children;
+    private List<Person> parents;
 
-    public Person(String fullName, String birthDate) {
+    public Person(String fullName, LocalDate birthDate, LocalDate deathDate) {
         this.fullName = fullName;
         this.birthDate = birthDate;
+        this.deathDate = deathDate;
         this.children = new ArrayList<>();
+        this.parents = new ArrayList<>();
     }
 
     public String getFullName() {
@@ -21,12 +27,20 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public String getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
     }
 
     public List<Person> getChildren() {
@@ -35,6 +49,10 @@ public class Person {
 
     public void addChild(Person child) {
         children.add(child);
+    }
+
+    public void addParent(Person parent) {
+        parents.add(parent);
     }
 
     @Override
