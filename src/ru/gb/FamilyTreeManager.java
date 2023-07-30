@@ -1,4 +1,4 @@
-package ru.gb.FamilyTree;
+package ru.gb;
 
 import ru.gb.FamilyTree.Trees.FamilyTree;
 

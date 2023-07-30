@@ -2,10 +2,8 @@ package ru.gb.FamilyTree.Trees;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.gb.FamilyTree.Humans.Gender;
 import ru.gb.FamilyTree.Humans.Person;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 
