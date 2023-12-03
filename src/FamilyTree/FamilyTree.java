@@ -1,11 +1,12 @@
 package FamilyTree;
 
+import java.io.Serializable;
 import FamilyTree.HR.Human;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
-    private int countPeople;
+public class FamilyTree implements Serializable{
+    private int countPeopleInTree;
 
     private List<Human> humanList;
 
@@ -20,7 +21,7 @@ public class FamilyTree {
     public boolean add(Human human){
         if (!humanList.contains(human)){
             humanList.add(human);
-            human.setId(countPeople++);
+            human.setId(countPeopleInTree++);
 
             addToParents(human);
             addToChildren(human);
@@ -51,7 +52,7 @@ public class FamilyTree {
         return false;
     }
     private boolean checkId(long id) {
-        return id < countPeople && id >= 0;
+        return id < countPeopleInTree && id >= 0;
     }
     public Human getById(long id){
         if (checkId(id)){
@@ -68,15 +69,16 @@ public class FamilyTree {
         return getInfo();
     }
     public String getInfo(){
-        StringBuilder ftbase = new StringBuilder();
-        ftbase.append("\n В дереве ");
-        ftbase.append(humanList.size());
-        ftbase.append(" объектов: \n");        for (Human human: humanList){
-            ftbase.append(human);
-            ftbase.append("\n");
+        StringBuilder familytreebase = new StringBuilder();
+        familytreebase.append("\n В дереве ");
+        familytreebase.append(humanList.size());
+        familytreebase.append(" объектов: \n");
+        for (Human human: humanList){
+            familytreebase.append(human);
+            familytreebase.append("\n");
         }
 
-        return ftbase.toString();
+        return familytreebase.toString();
     }
 
 }

@@ -1,11 +1,12 @@
 package FamilyTree.HR;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable{
 
     private int id;
     private String name;
@@ -141,16 +142,18 @@ public class Human {
             return getPeriod(birthDate, deathDate);
         }
     }
-    public LocalDate getLive(){
+    public LocalDate getLived(){
         if (deathDate != null){
             return deathDate;
         }
         return null;
     }
+
     private int getPeriod(LocalDate birthDate, LocalDate deathDate){
         Period diff = Period.between(birthDate, deathDate);
         return diff.getYears();
     }
+
 
     public String getMotherInfo(){
 
@@ -162,19 +165,19 @@ public class Human {
     }
 
     public String getChildrenInfo(){
-        StringBuilder res = new StringBuilder();
-        res.append("дети: ");
-        if (!children.isEmpty()) {
-            res.append(children.get(0).getName());
-            for (int i = 1; i < children.size(); i++) {
-                res.append(", ");
-                res.append(children.get(i).getName());
+        StringBuilder children = new StringBuilder();
+        children.append("дети: ");
+        if (!this.children.isEmpty()) {
+            children.append(this.children.get(0).getName());
+            for (int i = 1; i < this.children.size(); i++) {
+                children.append(", ");
+                children.append(this.children.get(i).getName());
             }
         }
         else {
-            res.append("отсутствуют");
+            children.append("отсутствуют");
         }
-        return res.toString();
+        return children.toString();
     }
     public String getSpouseInfo(){
 
@@ -185,28 +188,40 @@ public class Human {
         return getInfo();
     }
     public String getInfo(){
-        StringBuilder ftbase = new StringBuilder();
-        ftbase.append("id: ");
-        ftbase.append(id);
-        ftbase.append(", имя: ");
-        ftbase.append(name);
-        ftbase.append(", пол: ");
-        ftbase.append(getGender());
-        ftbase.append(", ");
-        ftbase.append(", проживает в ");
-        ftbase.append(getPlace_of_residence());
-        ftbase.append(", ");
-        ftbase.append(getLive());
-        ftbase.append(", возраст: ");
-        ftbase.append(getAge());
-        ftbase.append(", супруг(а): ");
-        ftbase.append(getSpouseInfo());
-        ftbase.append(", ");
-        ftbase.append(getMotherInfo());
-        ftbase.append(", ");
-        ftbase.append(getFatherInfo());
-        ftbase.append(", ");
-        ftbase.append(getChildrenInfo());
-        return ftbase.toString();
+        StringBuilder familytreebase = new StringBuilder();
+        familytreebase.append("id: ");
+        familytreebase.append(id);
+        familytreebase.append(", имя: ");
+        familytreebase.append(name);
+        familytreebase.append(", пол: ");
+        familytreebase.append(getGender());
+        familytreebase.append(", ");
+        familytreebase.append(", проживает в ");
+        familytreebase.append(getPlace_of_residence());
+        familytreebase.append(", ");
+        familytreebase.append(getLived());
+        familytreebase.append(", возраст: ");
+        familytreebase.append(getAge());
+        familytreebase.append(", супруг(а): ");
+        familytreebase.append(getSpouseInfo());
+        familytreebase.append(", ");
+        familytreebase.append(getMotherInfo());
+        familytreebase.append(", ");
+        familytreebase.append(getFatherInfo());
+        familytreebase.append(", ");
+        familytreebase.append(getChildrenInfo());
+        return familytreebase.toString();
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Human)) {
+            return false;
+        }
+        Human human = (Human) obj;
+        return human.getId() == getId();
+    }
+
 }
