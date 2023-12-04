@@ -1,4 +1,6 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.storage;
+
+import ru.gb.family_tree.storage.Storagable;
 
 import java.io.*;
 
