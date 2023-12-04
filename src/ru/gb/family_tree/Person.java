@@ -1,25 +1,23 @@
 package ru.gb.family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Person {
+public class Person implements Serializable {
 
     private String name;
     private Gender gender;
     private LocalDate dateOfDeath;
     private LocalDate dateOfBirth;
     private Person father, mother;
+    private final List<Person> children = new ArrayList<>();
 
     public List<Person> getChildren() {
         return children;
     }
-
-
-    private final List<Person> children = new ArrayList<>();
-
     public Person(String name, Gender gender) {
         this.name = name;
         this.gender = gender;
@@ -31,7 +29,6 @@ public class Person {
 
     public Person(){
         this ("unknown");
-
     }
 
     public String getName() {
@@ -72,7 +69,7 @@ public class Person {
 
     public void setFather(Person father) {
         this.father = father;
-        father.addChild(this);
+
     }
 
     public Person getMother() {
@@ -81,19 +78,14 @@ public class Person {
 
     public void setMother(Person mother) {
         this.mother = mother;
-        mother.addChild(this);
-    }
-    public void addChild(Person child){
-        children.add(child);
-        if (gender == Gender.MALE){
-            child.setFather(this);
 
-        }
-        else child.setMother(this);
+    }
+    public void addChild(Person child) {
+        children.add(child);
     }
 
     @Override
     public String toString() {
-        return "Человек по имени " + name + " год рождения " + dateOfBirth.toString() ;
+        return "Человек по имени " + name + " год рождения " ;
     }
 }
