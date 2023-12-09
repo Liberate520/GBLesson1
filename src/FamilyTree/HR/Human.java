@@ -34,11 +34,8 @@ public class Human implements Serializable{
     public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
         this(name, gender, birthDate, null, null, father, mother);
     }
-    public Human(String name, Gender gender, LocalDate birthDate, Human mother) {
-        this(name, gender, birthDate, null, null, null, mother);
-    }
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
-        this(name, gender, birthDate, null, deathDate, null, null);
+    public Human(String name, Gender gender, String place_of_residence, LocalDate birthDate, Human father, Human mother) {
+        this(name, gender, birthDate, place_of_residence, null, father, mother);
     }
     public Human(String name, Gender gender, LocalDate birthDate) {
         this(name, gender, birthDate, null, null, null, null);
@@ -156,13 +153,30 @@ public class Human implements Serializable{
 
 
     public String getMotherInfo(){
-
-        return null;
+        String result = "мать: ";
+        Human mother = getMother();
+        if (mother != null){
+            result += mother.getName();
+        }
+        else {
+            result += "неизвестна";
+        }
+        return result;
     }
+
+
     public String getFatherInfo(){
-
-        return null;
+        String result = "отец: ";
+        Human father = getFather();
+        if (father != null){
+            result += father.getName();
+        }
+        else {
+            result += "неизвестен";
+        }
+        return result;
     }
+
 
     public String getChildrenInfo(){
         StringBuilder children = new StringBuilder();
@@ -198,8 +212,8 @@ public class Human implements Serializable{
         familytreebase.append(", ");
         familytreebase.append(", проживает в ");
         familytreebase.append(getPlace_of_residence());
-        familytreebase.append(", ");
-        familytreebase.append(getLived());
+//        familytreebase.append(", ");
+//        familytreebase.append(getLived());
         familytreebase.append(", возраст: ");
         familytreebase.append(getAge());
         familytreebase.append(", супруг(а): ");

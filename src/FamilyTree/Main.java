@@ -1,5 +1,6 @@
 package FamilyTree;
 
+import FamilyTree.Family_Tree.FamilyTree;
 import FamilyTree.HR.Gender;
 import FamilyTree.HR.Human;
 import FamilyTree.writer.FileHandler;
@@ -9,21 +10,21 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
 
-        FamilyTree tree = upTree();
+//        FamilyTree tree = upTree();
 
-//        FamilyTree tree = load();
+        FamilyTree tree = load();
         System.out.println(tree);
-        save(tree);
+//        save(tree);
     }
 
     private static FamilyTree load() {
-        String filePath = "src/FamilyTree/writer/tree.txt";
+        String filePath = "src/FamilyTree/writer/tree.out";
         FileHandler fileHandler = new FileHandler();
-        return (FamilyTree) fileHandler.read(filePath);
+        return (FamilyTree) fileHandler.load(filePath);
     }
 
     private static void save(FamilyTree tree) {
-        String filePath = "src/FamilyTree/writer/tree.txt";
+        String filePath = "src/FamilyTree/writer/tree.out";
         FileHandler fileHandler = new FileHandler();
         if (fileHandler.save(tree, filePath)) {
             System.out.println("каталог сохранён");
@@ -36,17 +37,18 @@ public class Main {
     static FamilyTree upTree(){
         FamilyTree tree = new FamilyTree();
 
-        Human polina = new Human("Полина", Gender.Female, LocalDate.of(1936, 9 ,16), LocalDate.of(1997, 5, 2));
+        Human andrey = null;
+        Human polina = new Human("Полина", Gender.Female,"Astana", LocalDate.of(1997, 6, 7));
         tree.add(polina);
 
-        Human Viktor = new Human("Виктор", Gender.Male, LocalDate.of(1967, 4, 9), null, polina);
-        Human Vika = new Human("Виктория", Gender.Female, LocalDate.of(1969, 9, 7));
-        tree.add(Viktor);
-        tree.add(Vika);
+        Human viktor = new Human("Виктор", Gender.Male, LocalDate.of(1967, 4, 9), null, polina);
+        Human vika = new Human("Виктория", Gender.Female, LocalDate.of(1969, 9, 7));
+        tree.add(viktor);
+        tree.add(vika);
 
-        Human Olga = new Human("Ольга", Gender.Female, LocalDate.of(1990, 2, 14), Viktor, Vika);
-        tree.add(Olga);
-        Human igor = new Human("Игорь", Gender.Male, LocalDate.of(2018, 8, 14), Olga);
+        Human olga = new Human("Ольга", Gender.Female, LocalDate.of(1990, 2, 14), viktor, vika);
+        tree.add(olga);
+        Human igor = new Human("Игорь", Gender.Male, "Petersburg", LocalDate.of(2018, 8, 14),  andrey, olga);
         tree.add(igor);
 
 

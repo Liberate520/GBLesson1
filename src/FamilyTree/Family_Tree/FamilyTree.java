@@ -1,11 +1,16 @@
-package FamilyTree;
+package FamilyTree.Family_Tree;
 
 import java.io.Serializable;
 import FamilyTree.HR.Human;
+import FamilyTree.HR.HumanComparatorByBirthDate;
+import FamilyTree.HR.HumanComparatorByName;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable{
+
+public class FamilyTree implements Serializable, Iterable<Human>{
     private int countPeopleInTree;
 
     private List<Human> humanList;
@@ -43,6 +48,16 @@ public class FamilyTree implements Serializable{
         }
     }
 
+    public boolean setWedding(Human human1, Human human2){
+        if(human1.getSpouse() == null && human2.getSpouse() == null){
+            human1.setSpouse(human2);
+            human2.setSpouse(human1);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public boolean remove(int humansId){
         if (checkId(humansId)){
@@ -51,10 +66,24 @@ public class FamilyTree implements Serializable{
         }
         return false;
     }
-    private boolean checkId(long id) {
+
+//    private Human getById(int humansId) {
+//        return null;
+//    }
+
+    public List<Human> getByName(String name) {
+        List<Human> res = new ArrayList<>();
+        for (Human human : humanList) {
+            if (human.getName().equals(name)) {
+                res.add(human);
+            }
+        }
+        return res;
+    }
+    private boolean checkId(int id) {
         return id < countPeopleInTree && id >= 0;
     }
-    public Human getById(long id){
+    public Human getById(int id){
         if (checkId(id)){
             for (Human human: humanList){
                 if (human.getId() == id) {
@@ -81,4 +110,15 @@ public class FamilyTree implements Serializable{
         return familytreebase.toString();
     }
 
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(humanList);
+    }
+    public void sortByName(){
+        humanList.sort(new HumanComparatorByName());
+    }
+
+    public void sortByBirthData(){
+        humanList.sort(new HumanComparatorByBirthDate());
+    }
 }
