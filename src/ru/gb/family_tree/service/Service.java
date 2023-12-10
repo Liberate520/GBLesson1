@@ -2,59 +2,87 @@ package ru.gb.family_tree.service;
 
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.human.HumanBuilder;
 import ru.gb.family_tree.storage.FileHodler;
 import ru.gb.family_tree.tree.FamilyTree;
 
 import java.time.LocalDate;
 
 public class Service {
-    public static FamilyTree createTestTree() {
-        FamilyTree tree = new FamilyTree();
+    private HumanBuilder hb;
+    private FamilyTree<Human> tree;
 
-        Human me = new Human("Denis", "Krasnodar", Gender.Male, LocalDate.of(1987, 07, 07));
-
-        Human wife = new Human("Jane", "Murmansk", Gender.Female, LocalDate.of(1991, 05, 05));
-
-        Human daughter = new Human("Alice", "Sochi", Gender.Female, LocalDate.of(2016, 12, 12), wife, me);
-        tree.add(me);
-        tree.add(wife);
-        tree.add(daughter);
-        Human mom = new Human("Nataly", "Ural", Gender.Female, LocalDate.of(1965, 02, 02));
-        tree.add(mom);
-        mom.addChild(me);
-        return tree;
+    public Service() {
+        tree = new FamilyTree();
+        hb = new HumanBuilder();
     }
 
-    public static void save(FamilyTree tree) {
-        String path = "src/ru/gb/family_tree/storage/NewTree.out";
+    public void addHuman(String name, String birthPlace, Gender gender, LocalDate birthDate) {
+        Human human = hb.build(name, birthPlace, gender, birthDate);
+        tree.add(human);
+    }
+
+    public void addHuman(String name, String birthPlace, Gender gender, LocalDate birthDate, int parentID) {
+        Human human = hb.build(name, birthPlace, gender, birthDate, parentID, tree);
+        tree.add(human);
+    }
+
+    public void addHuman(String name, String birthPlace, Gender gender, LocalDate birthDate, int motherID, int fatherID) {
+        Human human = hb.build(name, birthPlace, gender, birthDate, motherID, fatherID, tree);
+        tree.add(human);
+    }
+
+    public void addChildToHuman(int parentID, int childID) {
+        for (Human parent : tree) {
+            if (parent.getId() == parentID){
+                for (Human child : tree) {
+                    if (child.getId() == childID){
+                        parent.addChild(child);
+                    }
+                }
+        }
+
+    }
+
+}
+
+    public void save(String path) {
         FileHodler fh = new FileHodler();
         System.out.println("Family tree saved to '" + path + "'");
-        if(!fh.save(tree, path)){
+        if (!fh.save(tree, path)) {
             System.out.println("Something wrong on saving");
         }
 
     }
 
-    public static FamilyTree load() {
-        String path = "src/ru/gb/family_tree/storage/NewTree.out";
+    public FamilyTree load(String path) {
         FileHodler fh = new FileHodler();
         return (FamilyTree) fh.load(path);
     }
 
-    public static void sortByName(FamilyTree tree) {
+    public void sortByName() {
         tree.sortByName();
     }
 
-    public static void sortByAge(FamilyTree tree) {
+    public void sortByAge() {
         tree.sortByAge();
     }
 
-    public static void print(FamilyTree tree) {
-        if(tree.isEmpty() ){
+    public void print() {
+        if (tree.isEmpty()) {
             System.out.println("Tree is empty");
-        }
-        else{
+        } else {
             System.out.println(tree);
         }
+    }
+
+    public String getHumansList() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Humans in tree:\n");
+        for (Human human : tree) {
+            sb.append(human);
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

@@ -1,12 +1,15 @@
 package ru.gb.family_tree.human;
 
+
+import ru.gb.family_tree.tree.TreeLike;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, TreeLike<Human> {
     private long id;
     private String name;
     private String birthPlace;
@@ -17,9 +20,9 @@ public class Human implements Serializable, Comparable<Human> {
     private Human father;
     private List<Human> children;
 
-    public Human(String name, String birthPlace, Gender gender, LocalDate birthDate, LocalDate deathDate,
+    public Human(long id, String name, String birthPlace, Gender gender, LocalDate birthDate, LocalDate deathDate,
                  Human mother, Human father) {  //full
-        id = -1;
+        this.id = id;
         this.name = name;
         this.birthPlace = birthPlace;
         this.gender = gender;
@@ -30,13 +33,37 @@ public class Human implements Serializable, Comparable<Human> {
         children = new ArrayList<>();
     }
 
-    public Human(String name, String birthPlace, Gender gender, LocalDate birthDate) {  //alive?, unknown mom and dad
-        this(name, birthPlace, gender, birthDate, null, null, null);
+    public Human(long id, String name, String birthPlace, Gender gender, LocalDate birthDate) {  //alive?, unknown mom and dad
+        this(id, name, birthPlace, gender, birthDate, null, null, null);
     }
 
-    public Human(String name, String birthPlace, Gender gender, LocalDate birthDate,
+    public Human(long id, String name, String birthPlace, Gender gender, LocalDate birthDate, Human par) {
+        if (par.getGender() == Gender.Female) {
+            this.id = id;
+            this.name = name;
+            this.birthPlace = birthPlace;
+            this.gender = gender;
+            this.birthDate = birthDate;
+            this.deathDate = null;
+            this.mother = par;
+            this.father = null;
+            children = new ArrayList<>();
+        } else {
+            this.id = id;
+            this.name = name;
+            this.birthPlace = birthPlace;
+            this.gender = gender;
+            this.birthDate = birthDate;
+            this.deathDate = null;
+            this.mother = null;
+            this.father = par;
+            children = new ArrayList<>();
+        }
+    }
+
+    public Human(long id, String name, String birthPlace, Gender gender, LocalDate birthDate,
                  Human mother, Human father) {
-        this(name, birthPlace, gender, birthDate, null, mother, father);
+        this(id, name, birthPlace, gender, birthDate, null, mother, father);
     }
 
     public long getId() {

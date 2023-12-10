@@ -1,55 +1,54 @@
 package ru.gb.family_tree.tree;
 
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.human.HumanIterator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
-    private long humansID;
-    private List<Human> humanList;
+public class FamilyTree<E extends TreeLike<E>> implements Serializable, Iterable<E> {
+    private long memberID;
+    private List<E> membersList;
 
     public FamilyTree() {
         this(new ArrayList<>());
     }
 
-    public FamilyTree(List<Human> humanList) {
-        this.humanList = humanList;
+    public FamilyTree(List<E> membersList) {
+        this.membersList = membersList;
     }
 
-    public boolean add(Human human) {
-        if (human == null) {
-            return false;
-        }
-        if (!humanList.contains(human)) {
-            humanList.add(human);
-            human.setId(humansID++);
-
-
-            addToParents(human);
-            addToChildren(human);
-
-            return true;
-        }
-        return false;
+    public void add(E treeElement) {
+        membersList.add(treeElement);
+        addToParents(treeElement);
+        addToChildren(treeElement);
     }
 
-    private void addToChildren(Human human) {
-        for (Human child : human.getChildren()) {
-            child.addParent(human);
+    private void addToChildren(E treeElement) {
+        for (E child : treeElement.getChildren()) {
+            child.addParent(treeElement);
         }
     }
 
-    private void addToParents(Human human) {
-        for (Human parent : human.getParents()) {
-            parent.addChild(human);
+    private void addToParents(E treeElement) {
+        for (E parent : treeElement.getParents()) {
+            parent.addChild(treeElement);
         }
+    }
+
+    public E getParent(int parentID) {
+
+        for (E parent : membersList) {
+            if (parent.getId() == parentID)
+                return parent;
+        }
+        return null;
     }
 
     public boolean isEmpty() {
-        if (humanList.isEmpty()) {
+        if (membersList.isEmpty()) {
             return true;
         }
         return false;
@@ -57,22 +56,27 @@ public class FamilyTree implements Serializable {
 
     public void sortByName() {
         System.out.println("Family tree sorted by Name");
-        Collections.sort(humanList, new FTComparatorByName());
+        Collections.sort(membersList, new FTComparatorByName<>());
     }
 
     public void sortByAge() {
         System.out.println("Family tree sorted by Age");
-        Collections.sort(humanList, new FTComparatorByAge());
+        Collections.sort(membersList, new FTComparatorByAge<>());
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Family Tree:\n");
-        for (Human human : humanList) {
-            sb.append(human);
+        for (E member : membersList) {
+            sb.append(member);
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new HumanIterator<>(membersList);
     }
 }
