@@ -1,9 +1,9 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.person;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class Person implements Serializable {
@@ -88,4 +88,6 @@ public class Person implements Serializable {
     public String toString() {
         return "Человек по имени " + name + " год рождения " ;
     }
+
+
 }

@@ -5,6 +5,6 @@ import java.io.Serializable;
 
 public interface Writable {
     void save(Serializable serializable) ;
-    void load (Serializable serializable);
+    Object load ();
 
 }

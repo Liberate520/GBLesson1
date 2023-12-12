@@ -22,13 +22,15 @@ public class FileHandler implements Writable {
     }
 
     @Override
-    public void load(Serializable serializable) {
+    public Object load() {
         ObjectInputStream objectInputStream = null;
         try {
             objectInputStream = new ObjectInputStream(new FileInputStream("person.out"));
             FamilyTree familyTree = (FamilyTree) objectInputStream.readObject();
-            System.out.println(familyTree);
+            //System.out.println(familyTree);
+
             objectInputStream.close();
+            return familyTree;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

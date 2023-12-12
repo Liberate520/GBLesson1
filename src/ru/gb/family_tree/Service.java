@@ -6,22 +6,12 @@ import ru.gb.family_tree.person.Gender;
 import ru.gb.family_tree.person.Person;
 import ru.gb.family_tree.writer.Writable;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-public class FamilyTree implements Serializable, Iterable<Person> {
-
-    private final List<Person> familyTree = new ArrayList<Person>();
-
-
+public class Service {
+    private final FamilyTree familyTree = new FamilyTree();
     public void addFamilyTreeMember(Person person) {
-        familyTree.add(person);
+        familyTree.addFamilyTreeMember(person);
     }
-
-    @Override
-    public String toString() {
+    public String getFamilyTreeInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Person person : familyTree) {
             stringBuilder.append(person);
@@ -30,30 +20,22 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     }
 
     public void addParent(Person person, Person child) {
-        if (person.getGender().equals(Gender.MALE)) {
-            child.setFather(person);
-        } else child.setMother(person);
-        person.addChild(child);
+        familyTree.addParent(person, child);
     }
 
 
     public void save(Writable writable) {
-        writable.save(this);
+        familyTree.save(writable);
     }
 
     public void load(Writable writable) {
-        writable.load();
+        familyTree.load(writable);
     }
 
     public void sortByName() {
-        familyTree.sort(new PersonComparatorByName());
+        familyTree.sortByName();
     }
     public void sortByAge() {
-        familyTree.sort(new PersonComparatorByAge());
-    }
-
-    @Override
-    public Iterator<Person> iterator() {
-        return new PersonIterator(familyTree);
+        familyTree.sortByAge();
     }
 }
