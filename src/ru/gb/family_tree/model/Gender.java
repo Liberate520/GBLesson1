@@ -1,4 +1,4 @@
-package ru.gb.family_tree.person;
+package ru.gb.family_tree.model;
 
 import java.io.Serializable;
 

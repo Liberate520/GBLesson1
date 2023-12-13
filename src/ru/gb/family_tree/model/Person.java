@@ -1,12 +1,11 @@
-package ru.gb.family_tree.person;
+package ru.gb.family_tree.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class Person implements Serializable {
+public class Person extends Member implements Serializable {
 
     private String name;
     private Gender gender;
@@ -39,6 +38,7 @@ public class Person implements Serializable {
         this.name = name;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
@@ -66,8 +66,8 @@ public class Person implements Serializable {
     public Person getFather() {
         return father;
     }
-
-    public void setFather(Person father) {
+    @Override
+    public void setFather(Member father) {
         this.father = father;
 
     }
@@ -75,12 +75,14 @@ public class Person implements Serializable {
     public Person getMother() {
         return mother;
     }
-
-    public void setMother(Person mother) {
+    @Override
+    public void setMother(Member mother) {
         this.mother = mother;
 
     }
-    public void addChild(Person child) {
+
+    @Override
+    public void addChild(Member child) {
         children.add(child);
     }
 

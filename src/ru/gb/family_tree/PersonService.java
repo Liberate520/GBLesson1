@@ -2,12 +2,11 @@ package ru.gb.family_tree;
 
 import ru.gb.family_tree.comparators.PersonComparatorByAge;
 import ru.gb.family_tree.comparators.PersonComparatorByName;
-import ru.gb.family_tree.person.Gender;
-import ru.gb.family_tree.person.Person;
+import ru.gb.family_tree.model.Person;
 import ru.gb.family_tree.writer.Writable;
 
-public class Service {
-    private final FamilyTree familyTree = new FamilyTree();
+public class PersonService {
+    private final FamilyTree<Person> familyTree = new FamilyTree<>();
     public void addFamilyTreeMember(Person person) {
         familyTree.addFamilyTreeMember(person);
     }
@@ -33,9 +32,9 @@ public class Service {
     }
 
     public void sortByName() {
-        familyTree.sortByName();
+        familyTree.sortByName(new PersonComparatorByName());
     }
     public void sortByAge() {
-        familyTree.sortByAge();
+        familyTree.sortByAge(new PersonComparatorByAge());
     }
 }
