@@ -3,7 +3,7 @@ package ru.gb.family_tree.model.service;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.HumanBuilder;
-import ru.gb.family_tree.model.storage.FileHodler;
+import ru.gb.family_tree.model.storage.FileHolder;
 import ru.gb.family_tree.model.tree.FamilyTree;
 
 import java.time.LocalDate;
@@ -34,21 +34,28 @@ public class Service {
 
     public void addChildToHuman(int parentID, int childID) {
         for (Human parent : tree) {
-            if (parent.getId() == parentID){
+            if (parent.getId() == parentID) {
                 for (Human child : tree) {
-                    if (child.getId() == childID){
+                    if (child.getId() == childID) {
                         parent.addChild(child);
                         child.addParent(parent);
                     }
                 }
+            }
+
         }
 
     }
-
-}
+    public void setDeathDate(int humanID,LocalDate date){
+        for(Human dead : tree){
+            if (dead.getId() == humanID) {
+                dead.setDeathDate(date);
+            }
+        }
+    }
 
     public void save(String path) {
-        FileHodler fh = new FileHodler();
+        FileHolder fh = new FileHolder();
         System.out.println("Family tree saved to '" + path + "'");
         if (!fh.save(tree, path)) {
             System.out.println("Something wrong on saving");
@@ -57,7 +64,7 @@ public class Service {
     }
 
     public FamilyTree load(String path) {
-        FileHodler fh = new FileHodler();
+        FileHolder fh = new FileHolder();
         tree = (FamilyTree) fh.load(path);
         return tree;
     }
@@ -68,14 +75,6 @@ public class Service {
 
     public void sortByAge() {
         tree.sortByAge();
-    }
-
-    public void print() {
-        if (tree.isEmpty()) {
-            System.out.println("Tree is empty");
-        } else {
-            System.out.println(tree);
-        }
     }
 
     public String getHumansList() {

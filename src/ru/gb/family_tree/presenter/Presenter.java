@@ -47,6 +47,10 @@ public class Presenter {
         service.load(file);
     }
 
+    public void setDeathDate(int iD, LocalDate date) {
+        service.setDeathDate(iD, date);
+    }
+
     public void addChildTo(int parentID, int childID) {
         service.addChildToHuman(parentID, childID);
     }

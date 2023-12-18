@@ -2,7 +2,7 @@ package ru.gb.family_tree.model.storage;
 
 import java.io.*;
 
-public class FileHodler implements Storagable {
+public class FileHolder implements Storagable {
     public boolean save(Serializable sr, String path) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path))) {
             out.writeObject(sr);

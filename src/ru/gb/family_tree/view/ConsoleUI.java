@@ -11,10 +11,12 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     boolean fl;
     Gender gender;
+    private MainMenu menu;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
+        menu = new MainMenu(this);
     }
 
     @Override
@@ -22,55 +24,17 @@ public class ConsoleUI implements View {
         fl = true;
         System.out.println("Программа по созданию семейного дерева");
         while (fl) {
-            System.out.println("1. Добавить элемент в семейное дерево");
-            System.out.println("2. Получить список элементов семейного дерева");
-            System.out.println("3. Добавить ребенка к элементу семейного дерева");
-            System.out.println("4. Отсортировать семейное дерево по имени");
-            System.out.println("5. Отсортировать семейное дерево по возрасту");
-            System.out.println("6. Сохранить семейное дерево");
-            System.out.println("7. Загрузить семейное дерево");
-            System.out.println("8. Выход");
+            System.out.println(menu.menuElements());
             String choice = scanner.nextLine();
-            switch (choice) {
-                case ("1"): {
-                    addElement();
-                    break;
-                }
-                case ("2"): {
-                    getHumansList();
-                    break;
-                }
-                case ("3"): {
-                    addChildTo();
-                    break;
-                }
-                case ("4"): {
-                    sortByName();
-                    break;
-                }
-                case ("5"): {
-                    sortByAge();
-                    break;
-                }
-                case ("6"): {
-                    save();
-                    break;
-                }
-                case ("7"): {
-                    load();
-                    break;
-                }
-                case ("8"): {
-                    exit();
-                    break;
-                }
-            }
+            //метод для проверки количества элементов в списке
+            int correctChoice = Integer.parseInt(choice);
+            menu.action(correctChoice);
         }
 
     }
 
-    private void addChildTo() {
-        getHumansList();
+    public void addChildTo() {
+        getElementsList();
         System.out.println("Укажите ID элемента, которому необходимо добавить ребенка: ");
         int parentID = Integer.parseInt(scanner.nextLine());
         System.out.println("Укажите ID ребенка: ");
@@ -78,37 +42,37 @@ public class ConsoleUI implements View {
         presenter.addChildTo(parentID, childID);
     }
 
-    private void load() {
+    public void load() {
         System.out.println("Укажите путь к файлу и файл для загрузки (Пример - 'D:\\Save\\tree.out)': ");
         String file = scanner.nextLine();
         presenter.load("src/ru/gb/family_tree/model/storage/Tree.out");
     }
 
-    private void save() {
+    public void save() {
         System.out.println("Укажите место для сохранения файла (Пример - 'D:\\Save)': ");
         String path = scanner.nextLine();
         presenter.save("src/ru/gb/family_tree/model/storage/Tree.out");
     }
 
-    private void sortByAge() {
+    public void sortByAge() {
         presenter.sortByAge();
     }
 
-    private void sortByName() {
+    public void sortByName() {
         presenter.sortByName();
     }
 
-    private void getHumansList() {
+    public void getElementsList() {
         presenter.getHumansList();
     }
 
-    private void exit() {
+    public void exit() {
         System.out.println("До свидания");
         fl = false;
     }
 
-    private void addElement() {
-        getHumansList();
+    public void addElement() {
+        getElementsList();
         System.out.println("Введите имя: ");
         String name = scanner.nextLine();
         boolean gen = true;
@@ -138,13 +102,13 @@ public class ConsoleUI implements View {
         String mom = scanner.nextLine().toLowerCase();
         if (mom.equals("да")) {
             System.out.println("Введите ID матери: ");
-            getHumansList();
+            getElementsList();
             int momID = Integer.parseInt(scanner.nextLine());
             System.out.println("Вам известен ID отца (Да \\ Нет) ");
             String dad = scanner.nextLine().toLowerCase();
             if (dad.equals("да")) {
                 System.out.println("Введите ID отца: ");
-                getHumansList();
+                getElementsList();
                 int dadID = Integer.parseInt(scanner.nextLine());
                 presenter.addElement(name, birthPlace, gender, birthDate, momID, dadID);
             } else presenter.addElement(name, birthPlace, gender, birthDate, momID);
@@ -152,7 +116,7 @@ public class ConsoleUI implements View {
             System.out.println("Вам известен ID отца (Да \\ Нет) ");
             String dad = scanner.nextLine().toLowerCase();
             if (dad.equals("да")) {
-                getHumansList();
+                getElementsList();
                 System.out.println("Введите ID отца: ");
                 int dadID = Integer.parseInt(scanner.nextLine());
                 presenter.addElement(name, birthPlace, gender, birthDate, dadID);
@@ -160,6 +124,21 @@ public class ConsoleUI implements View {
                 presenter.addElement(name, birthPlace, gender, birthDate);
             }
         }
+    }
+
+    public void setDeathDate() {
+        getElementsList();
+        System.out.println("Укажите ID покойника: ");
+        int iD = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите дату смерти: ");
+        System.out.println("День: ");
+        int day = Integer.parseInt(scanner.nextLine());
+        System.out.println("Месяц: ");
+        int month = Integer.parseInt(scanner.nextLine());
+        System.out.println("Год: ");
+        int year = Integer.parseInt(scanner.nextLine());
+        LocalDate deathDate = LocalDate.of(year, month, day);
+        presenter.setDeathDate(iD, deathDate);
     }
 
     @Override
