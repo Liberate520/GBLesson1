@@ -26,7 +26,7 @@ public class FileHandler implements Writable {
         ObjectInputStream objectInputStream = null;
         try {
             objectInputStream = new ObjectInputStream(new FileInputStream("person.out"));
-            FamilyTree familyTree = (FamilyTree) objectInputStream.readObject();
+            Object familyTree =  objectInputStream.readObject();
             //System.out.println(familyTree);
 
             objectInputStream.close();

@@ -1,12 +1,13 @@
 package ru.gb.family_tree.comparators;
 
+import ru.gb.family_tree.model.Member;
 import ru.gb.family_tree.model.Person;
 
 import java.util.Comparator;
 
-public class PersonComparatorByAge implements Comparator<Person> {
+public class ComparatorByAge <T extends Member>implements Comparator<T> {
       @Override
-    public int compare(Person o1, Person o2) {
+    public int compare(T o1, T o2) {
 
         if (o1.getDateOfBirth().isBefore(o2.getDateOfBirth()) )
             return 1;

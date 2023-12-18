@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person extends Member implements Serializable {
+public class Person extends Member<Person> implements Serializable {
 
     private String name;
     private Gender gender;
@@ -67,7 +67,7 @@ public class Person extends Member implements Serializable {
         return father;
     }
     @Override
-    public void setFather(Member father) {
+    public void setFather(Person father) {
         this.father = father;
 
     }
@@ -76,13 +76,13 @@ public class Person extends Member implements Serializable {
         return mother;
     }
     @Override
-    public void setMother(Member mother) {
+    public void setMother(Person mother) {
         this.mother = mother;
 
     }
 
     @Override
-    public void addChild(Member child) {
+    public void addChild(Person child) {
         children.add(child);
     }
 

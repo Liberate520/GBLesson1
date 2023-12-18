@@ -1,12 +1,13 @@
 package ru.gb.family_tree;
 
+import ru.gb.family_tree.comparators.ComparatorByAge;
+import ru.gb.family_tree.comparators.ComparatorByName;
+import ru.gb.family_tree.iterators.MemberIterator;
 import ru.gb.family_tree.model.Gender;
 import ru.gb.family_tree.model.Member;
-import ru.gb.family_tree.writer.Writable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,21 +36,10 @@ public class FamilyTree<T extends Member> implements Serializable, Iterable<T> {
         parent.addChild(child);
     }
 
-
-    public void save(Writable writable) {
-        writable.save(this);
+    public void sortByName() {
+        familyTree.sort(new ComparatorByName<>());
     }
-
-    public void load(Writable writable) {
-        writable.load();
-    }
-
-    public void sortByName(Comparator<T> comparator) {
-        familyTree.sort(comparator);
-    }
-    public void sortByAge(Comparator<T> comparator) {
-        familyTree.sort(comparator);
-    }
+    public void sortByAge() { familyTree.sort(new ComparatorByAge<>());  }
 
     @Override
     public Iterator<T> iterator() {

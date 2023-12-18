@@ -1,13 +1,19 @@
 package ru.gb.family_tree.model;
 
-public abstract class Member {
+import java.time.LocalDate;
+
+public abstract class Member<T> {
 
     abstract public Gender getGender();
 
-    abstract public void setFather(Member father);
+    abstract public void setFather(T father);
 
-    abstract public void setMother(Member mother);
-    abstract public void addChild (Member child);
+    abstract public void setMother(T mother);
 
+    abstract public void addChild(T child);
+
+    abstract public LocalDate getDateOfBirth();
+
+    abstract public String getName();
 
 }
