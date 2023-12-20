@@ -16,4 +16,6 @@ public interface TreeLike<E> extends Serializable {
     List<E> getChildren();
     boolean addParent(E treeElement);
     boolean addChild(E treeElement);
+
+    void setDeathDate(LocalDate date);
 }

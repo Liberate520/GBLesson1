@@ -3,6 +3,7 @@ package ru.gb.family_tree.model.tree;
 import ru.gb.family_tree.model.human.HumanIterator;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -47,27 +48,42 @@ public class FamilyTree<E extends TreeLike<E>> implements Serializable, Iterable
         return null;
     }
 
-    public boolean isEmpty() {
-        if (membersList.isEmpty()) {
-            return true;
+    public void setDeathDate(int elementID, LocalDate date) {
+        for (E dead : membersList) {
+            if (dead.getId() == elementID) {
+                dead.setDeathDate(date);
+            }
         }
-        return false;
+    }
+    public void addChildToTreeElement(int parentID, int childID) {
+        for (E parent : membersList) {
+            if (parent.getId() == parentID) {
+                for (E child : membersList) {
+                    if (child.getId() == childID) {
+                        parent.addChild(child);
+                        child.addParent(parent);
+                    }
+                }
+            }
+
+        }
+
     }
 
     public void sortByName() {
-        System.out.println("Family tree sorted by Name");
+        System.out.println("Семейное дерево отсортировано по имени");
         Collections.sort(membersList, new FTComparatorByName<>());
     }
 
     public void sortByAge() {
-        System.out.println("Family tree sorted by Age");
+        System.out.println("Семейное дерево отсортировано по возрасту");
         Collections.sort(membersList, new FTComparatorByAge<>());
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Family Tree:\n");
+        sb.append("Семейное дерево:\n");
         for (E member : membersList) {
             sb.append(member);
             sb.append("\n");

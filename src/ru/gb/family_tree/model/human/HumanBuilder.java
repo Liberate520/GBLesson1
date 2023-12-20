@@ -18,7 +18,6 @@ public class HumanBuilder {
         else if (parent != null && parent.getGender() == Gender.Male)
             return new Human(id++, name, birthPlace, gender, birthDate, null, parent);
         else {
-            System.out.println("Incorrect ID, Human built without parent.");
             return new Human(id++, name, birthPlace, gender, birthDate);
         }
     }

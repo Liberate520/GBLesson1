@@ -39,8 +39,8 @@ public class Presenter {
         service.sortByAge();
     }
 
-    public void save(String path) {
-        service.save(path);
+    public boolean save(String path) {
+        return service.save(path);
     }
 
     public void load(String file) {

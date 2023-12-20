@@ -51,7 +51,23 @@ public class ConsoleUI implements View {
     public void save() {
         System.out.println("Укажите место для сохранения файла (Пример - 'D:\\Save)': ");
         String path = scanner.nextLine();
-        presenter.save("src/ru/gb/family_tree/model/storage/Tree.out");
+        if (path.isEmpty()){
+            if(presenter.save("src/ru/gb/family_tree/model/storage/Tree.out")){
+                System.out.println("Сохранено как: \"src/ru/gb/family_tree/model/storage/Tree.out\"\n");
+            }
+            else {
+                System.out.println("Что-то пошло не так.\n");
+            }
+        }
+        else {
+            if(presenter.save(path)){
+                System.out.println("Сохранено как: " + path);
+            }
+            else {
+                System.out.println("Что-то пошло не так.");
+            }
+        }
+
     }
 
     public void sortByAge() {

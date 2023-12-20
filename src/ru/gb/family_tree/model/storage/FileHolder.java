@@ -15,7 +15,6 @@ public class FileHolder implements Storagable {
 
     public Object load(String path) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
-            System.out.println("Успешно загружено");
             return in.readObject();
         } catch (Exception e) {
             e.printStackTrace();
