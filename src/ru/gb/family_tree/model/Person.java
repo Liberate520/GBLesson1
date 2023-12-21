@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+Выполняется принцип S (Единственной ответственности)
+ **/
 public class Person extends Member<Person> implements Serializable {
 
     private String name;

@@ -1,16 +1,18 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.model;
 
-import ru.gb.family_tree.comparators.ComparatorByAge;
-import ru.gb.family_tree.comparators.ComparatorByName;
-import ru.gb.family_tree.iterators.MemberIterator;
-import ru.gb.family_tree.model.Gender;
-import ru.gb.family_tree.model.Member;
+import ru.gb.family_tree.model.comparators.ComparatorByAge;
+import ru.gb.family_tree.model.comparators.ComparatorByName;
+import ru.gb.family_tree.model.iterators.MemberIterator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Выполнятся принцип "I" (разделение интерфейсов)
+ *
+ */
 public class FamilyTree<T extends Member> implements Serializable, Iterable<T> {
 
     private final List<T> familyTree = new ArrayList<T>();

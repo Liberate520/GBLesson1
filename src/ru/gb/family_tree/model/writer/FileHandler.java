@@ -1,8 +1,11 @@
-package ru.gb.family_tree.writer;
-
-import ru.gb.family_tree.FamilyTree;
+package ru.gb.family_tree.model.writer;
 
 import java.io.*;
+
+/*
+Принцип "D" на базовом уровне частный FileHandler знает об интерфейсе Writable, но более общий интерфейс Writable
+ не знает о классе FileHandler.
+ */
 
 public class FileHandler implements Writable {
 
