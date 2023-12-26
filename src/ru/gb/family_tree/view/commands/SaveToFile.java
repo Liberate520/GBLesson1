@@ -1,6 +1,5 @@
 package ru.gb.family_tree.view.commands;
 
-import ru.gb.family_tree.model.writer.SavingType;
 import ru.gb.family_tree.view.ConsoleUI;
 
 public class SaveToFile extends Command {
@@ -11,6 +10,6 @@ public class SaveToFile extends Command {
 
     @Override
     public void execute() {
-        consoleUI.save(SavingType.FILE);
+        consoleUI.saveToFile();
     }
 }

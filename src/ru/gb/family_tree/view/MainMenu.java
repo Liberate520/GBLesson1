@@ -1,8 +1,5 @@
 package ru.gb.family_tree.view;
 
-import ru.gb.family_tree.model.Gender;
-import ru.gb.family_tree.model.Person;
-import ru.gb.family_tree.model.writer.SavingType;
 import ru.gb.family_tree.view.commands.*;
 
 import java.util.ArrayList;

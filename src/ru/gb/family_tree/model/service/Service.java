@@ -3,9 +3,7 @@ package ru.gb.family_tree.model.service;
 import ru.gb.family_tree.model.FamilyTree;
 import ru.gb.family_tree.model.Gender;
 import ru.gb.family_tree.model.Person;
-import ru.gb.family_tree.model.writer.FileHandler;
 import ru.gb.family_tree.model.writer.Writable;
-import ru.gb.family_tree.model.writer.SavingType;
 
 import java.time.LocalDate;
 
@@ -13,7 +11,7 @@ public class Service {
 
     private FamilyTree<Person> familyTree = new FamilyTree<>();
 
-    private Writable writable;
+
 
     public void addFamilyTreeMember(String name, String sGender) {
         Gender gender;
@@ -49,29 +47,16 @@ public class Service {
     }
 
 
-    public void save(SavingType savingType) {
-        switch (savingType) {
-            case FILE -> {
-                writable = new FileHandler();
-            }
-            default -> {
-            }
-        }
+    public void save(Writable writable) {
+
         writable.save(familyTree);
-        writable = null;
+
     }
 
-    public void load(SavingType savingType) {
-        switch (savingType) {
-            case FILE -> {
-                writable = new FileHandler();
-            }
-            default -> {
-            }
-        }
+    public void load(Writable writable) {
+
         familyTree = (FamilyTree) writable.load();
 
-        writable = null;
     }
 
     void Personmake() {

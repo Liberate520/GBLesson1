@@ -1,8 +1,7 @@
 package ru.gb.family_tree.view;
 
-import ru.gb.family_tree.model.Person;
 import ru.gb.family_tree.presenter.Presenter;
-import ru.gb.family_tree.model.writer.SavingType;
+
 import java.util.Scanner;
 /*
 Выполняется принцип "О" - принцип открытости - закрытости. Можно бесконечно расширять функционал класса.
@@ -129,13 +128,13 @@ public class ConsoleUI implements View {
     }
 
     @Override
-    public void save (SavingType savingType) {
-        presenter.save(savingType);
+    public void saveToFile () {
+        presenter.saveToFile();
     }
 
     @Override
-    public void load(SavingType savingType) {
-        presenter.load(savingType);
+    public void loadFromFile() {
+        presenter.loadFromFile();
     }
 
 

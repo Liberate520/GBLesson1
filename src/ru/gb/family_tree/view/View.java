@@ -1,8 +1,5 @@
 package ru.gb.family_tree.view;
 
-import ru.gb.family_tree.model.Person;
-import ru.gb.family_tree.model.writer.SavingType;
-
 public interface View {
     void print(String text);
 
@@ -23,7 +20,7 @@ public interface View {
 
     void sortByAge();
 
-    void save(SavingType savingType);
-    void load(SavingType savingType);
+    void saveToFile();
+    void loadFromFile();
 }
 

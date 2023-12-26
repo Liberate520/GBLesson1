@@ -16,9 +16,10 @@ public class FileHandler implements Writable {
         try {
             objectOutputStream = new ObjectOutputStream(new FileOutputStream("person.out"));
             objectOutputStream.writeObject(serializable);
-
             objectOutputStream.close();
+
         } catch (IOException e) {
+
             throw new RuntimeException(e);
         }
 
@@ -33,6 +34,7 @@ public class FileHandler implements Writable {
             //System.out.println(familyTree);
 
             objectInputStream.close();
+
             return familyTree;
         } catch (Exception e) {
             throw new RuntimeException(e);

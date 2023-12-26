@@ -7,7 +7,7 @@ public class AddPerson extends Command {
 
     public AddPerson(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Добавить студента";
+        description = "Добавить члена фамильного дерева";
 
     }
 

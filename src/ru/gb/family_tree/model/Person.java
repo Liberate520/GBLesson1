@@ -90,7 +90,7 @@ public class Person extends Member<Person> implements Serializable {
 
     @Override
     public String toString() {
-        return "Человек по имени " + name + " год рождения " ;
+        return "Человек по имени " + name;
     }
 
 

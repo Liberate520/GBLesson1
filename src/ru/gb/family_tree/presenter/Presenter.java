@@ -1,8 +1,7 @@
 package ru.gb.family_tree.presenter;
 
-import ru.gb.family_tree.model.Person;
 import ru.gb.family_tree.model.service.Service;
-import ru.gb.family_tree.model.writer.SavingType;
+import ru.gb.family_tree.model.writer.FileHandler;
 import ru.gb.family_tree.view.View;
 
 public class Presenter {
@@ -34,12 +33,12 @@ public class Presenter {
         service.sortByAge();
 
     }
-    public void save(SavingType savingType) {
-        service.save(savingType);
+
+    public void saveToFile() {
+        service.save(new FileHandler());
     }
 
-    public void load(SavingType savingType) {
-       service.load(savingType);
-
+    public void loadFromFile() {
+        service.load(new FileHandler());
     }
 }
