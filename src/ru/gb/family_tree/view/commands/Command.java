@@ -1,12 +1,12 @@
 package ru.gb.family_tree.view.commands;
 
-import ru.gb.family_tree.view.ConsoleUI;
+import ru.gb.family_tree.view.View;
 
 public abstract class Command {
     String description;
-    ConsoleUI consoleUI;
+    View consoleUI;
 
-    public Command(ConsoleUI consoleUI) {
+    public Command(View consoleUI) {
         this.consoleUI = consoleUI;
     }
 

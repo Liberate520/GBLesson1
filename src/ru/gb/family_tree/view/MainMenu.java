@@ -9,15 +9,10 @@ import java.util.List;
 Выполняется принцип "L" В конструкторе приходит параметр типа View, который более общий, чем класс ConsoleUI.
  */
 public class MainMenu {
-
     private View UI;
     private List<Command> commandList;
 
-    public MainMenu(View UI) {
-        this.UI = UI;
-    }
-
-    public MainMenu(ConsoleUI consoleUI) {
+    public MainMenu(View consoleUI) {
         commandList = new ArrayList<>();
         commandList.add(new AddPerson(consoleUI));
         commandList.add(new GetInfo(consoleUI));
@@ -35,14 +30,11 @@ public class MainMenu {
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
-
-
     }
     public void execute(int choice){
         Command command = commandList.get(choice-1);
         command.execute();
     }
-
     public int getSize(){
         return commandList.size();
     }

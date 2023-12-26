@@ -1,11 +1,10 @@
 package ru.gb.family_tree.view.commands;
 
-import ru.gb.family_tree.model.Person;
-import ru.gb.family_tree.view.ConsoleUI;
+import ru.gb.family_tree.view.View;
 
 public class AddPerson extends Command {
 
-    public AddPerson(ConsoleUI consoleUI) {
+    public AddPerson(View consoleUI) {
         super(consoleUI);
         description = "Добавить члена фамильного дерева";
 
