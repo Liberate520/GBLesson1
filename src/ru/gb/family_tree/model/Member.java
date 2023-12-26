@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public abstract class Member<T> {
 
+
     abstract public Gender getGender();
 
     abstract public void setFather(T father);
@@ -15,5 +16,6 @@ public abstract class Member<T> {
     abstract public LocalDate getDateOfBirth();
 
     abstract public String getName();
+
 
 }

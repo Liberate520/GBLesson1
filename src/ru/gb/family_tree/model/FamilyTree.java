@@ -17,6 +17,9 @@ public class FamilyTree<T extends Member> implements Serializable, Iterable<T> {
 
     private final List<T> familyTree = new ArrayList<T>();
 
+    public FamilyTree() {
+    }
+
 
     public void addFamilyTreeMember(T member) {
         familyTree.add(member);

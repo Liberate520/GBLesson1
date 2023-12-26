@@ -2,7 +2,7 @@ package ru.gb.family_tree.view;
 
 import ru.gb.family_tree.model.Person;
 import ru.gb.family_tree.presenter.Presenter;
-import ru.gb.family_tree.presenter.SavingType;
+import ru.gb.family_tree.model.writer.SavingType;
 import java.util.Scanner;
 /*
 Выполняется принцип "О" - принцип открытости - закрытости. Можно бесконечно расширять функционал класса.
@@ -61,15 +61,14 @@ public class ConsoleUI implements View {
         System.out.println("Доброго времени суток!");
     }
 
-    private void execute() {
+     private void execute(){
         String line = scanner.nextLine();
-        if (checkTextForInt(line)) {
+        if (checkTextForInt(line)){
             int numCommand = Integer.parseInt(line);
-            if (checkCommand(numCommand)) {
-                menu.start(numCommand);
+            if (checkCommand(numCommand)){
+                menu.execute(numCommand);
             }
         }
-
     }
 
     private boolean checkTextForInt(String text) {
@@ -82,7 +81,7 @@ public class ConsoleUI implements View {
     }
 
     private boolean checkCommand(int numCommand) {
-        if (numCommand <= N) {
+        if (numCommand <= menu.getSize()) {
             return true;
         } else {
             inputError();
@@ -91,14 +90,16 @@ public class ConsoleUI implements View {
     }
 
     private void printMenu() {
-        N = 0;
-        System.out.printf("%d. Добавить члена семьи \n", ++N);
-        System.out.printf("%d. Вывести информацию о семейном дереве\n", ++N);
-        System.out.printf("%d. Сортировать членов семейного дерева по имени\n", ++N);
-        System.out.printf("%d. Сортировать членов семейного дерева по возрасту\n", ++N);
-        System.out.printf("%d. Сохранить в файл]\n", ++N);
-        System.out.printf("%d. Загрузить из файла\n", ++N);
-        System.out.printf("%d. Закончить работу\n", ++N);
+
+        System.out.println(menu.menu());
+//        N = 0;
+//        System.out.printf("%d. Добавить члена семьи \n", ++N);
+//        System.out.printf("%d. Вывести информацию о семейном дереве\n", ++N);
+//        System.out.printf("%d. Сортировать членов семейного дерева по имени\n", ++N);
+//        System.out.printf("%d. Сортировать членов семейного дерева по возрасту\n", ++N);
+//        System.out.printf("%d. Сохранить в файл]\n", ++N);
+//        System.out.printf("%d. Загрузить из файла\n", ++N);
+//        System.out.printf("%d. Закончить работу\n", ++N);
     }
 
     private void inputError() {
@@ -106,8 +107,8 @@ public class ConsoleUI implements View {
     }
 
     @Override
-    public void addFamilyTreeMember(Person person) {
-        presenter.addFamilyTreeMember(person);
+    public void addFamilyTreeMember(String name, String sGender) {
+        presenter.addFamilyTreeMember(name, sGender);
     }
 
     @Override
@@ -136,4 +137,6 @@ public class ConsoleUI implements View {
     public void load(SavingType savingType) {
         presenter.load(savingType);
     }
+
+
 }
