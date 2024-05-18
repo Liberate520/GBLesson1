@@ -1,0 +1,15 @@
+E:\Projects\GB OOP\csharp\family-tree\bin\Debug\net8.0\family-tree.exe
+E:\Projects\GB OOP\csharp\family-tree\bin\Debug\net8.0\family-tree.deps.json
+E:\Projects\GB OOP\csharp\family-tree\bin\Debug\net8.0\family-tree.runtimeconfig.json
+E:\Projects\GB OOP\csharp\family-tree\bin\Debug\net8.0\family-tree.dll
+E:\Projects\GB OOP\csharp\family-tree\bin\Debug\net8.0\family-tree.pdb
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\family-tree.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\family-tree.AssemblyInfoInputs.cache
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\family-tree.AssemblyInfo.cs
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\family-tree.csproj.CoreCompileInputs.cache
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\family-tree.sourcelink.json
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\family-tree.dll
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\refint\family-tree.dll
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\family-tree.pdb
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\family-tree.genruntimeconfig.cache
+E:\Projects\GB OOP\csharp\family-tree\obj\Debug\net8.0\ref\family-tree.dll
