@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("family-tree")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06bed8b3c2dad151639c9a72457f0d8cd25e060f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c8208ca1c41bd6ab49738a22b2094e0fef4cffea")]
 [assembly: System.Reflection.AssemblyProductAttribute("family-tree")]
 [assembly: System.Reflection.AssemblyTitleAttribute("family-tree")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
