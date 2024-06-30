@@ -10,9 +10,11 @@ public class Main {
 
         Product product1 = new Bottle("coca-cola", 150, 1.5);
         Product product2 = new Product("milko", 100);
+        Product product3 = new Product("twix", 65);
 
         vendingMachine.addProduct(product1);
         vendingMachine.addProduct(product2);
+        vendingMachine.addProduct(product3);
 
         System.out.println(vendingMachine.getProductsInfo());
     }
