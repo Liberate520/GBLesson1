@@ -2,9 +2,7 @@ package ru.gb.vending_machine;
 
 import ru.gb.vending_machine.family_tree.FamilyTree;
 import ru.gb.vending_machine.family_tree.Person;
-import ru.gb.vending_machine.products.Bottle;
-import ru.gb.vending_machine.products.Product;
-import ru.gb.vending_machine.vending.VendingMachine;
+
 
 public class Main {
     public static void main(String[] args) {
