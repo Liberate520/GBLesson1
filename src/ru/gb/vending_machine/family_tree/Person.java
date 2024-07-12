@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
-    private String name;
-    private String gender;
-    private String birthDate;
-    private List<Person> children;
+    private final String name;
+    private final String gender;
+    private final String birthDate;
+    private final List<Person> children;
 
     public Person(String name, String gender, String birthDate) {
         this.name = name;

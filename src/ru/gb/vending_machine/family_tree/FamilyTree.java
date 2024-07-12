@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FamilyTree {
-    private Map<String, Person> people;
+    private final Map<String, Person> people;
 
     public FamilyTree() {
         this.people = new HashMap<>();
