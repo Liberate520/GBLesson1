@@ -1,15 +1,23 @@
 package ru.gb.vending_machine.family_tree;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private final String name;
-    private final String gender;
-    private final String birthDate;
+    private final Gender gender;
+    private final LocalDate birthDate;
+    private LocalDate deathDate;
     private final List<Person> children;
 
-    public Person(String name, String gender, String birthDate) {
+    public Person(String name, Gender gender, LocalDate birthDate) {
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
@@ -20,12 +28,20 @@ public class Person {
         return name;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public String getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
     }
 
     public List<Person> getChildren() {
@@ -36,12 +52,21 @@ public class Person {
         this.children.add(child);
     }
 
+    public int getAge() {
+        LocalDate endDate = (deathDate != null) ? deathDate : LocalDate.now();
+        return Period.between(birthDate, endDate).getYears();
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "name='" + name + '\'' +
-                ", gender='" + gender + '\'' +
-                ", birthDate='" + birthDate + '\'' +
+                ", gender=" + gender +
+                ", birthDate=" + birthDate +
+                (deathDate != null ? ", deathDate=" + deathDate : "") +
                 '}';
     }
 }
+
+
+
