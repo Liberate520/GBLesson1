@@ -3,12 +3,24 @@ package ru.gb.family_tree;
 import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
+//import ru.gb.family_tree.human.HumanBuilder;
+import ru.gb.family_tree.service.Service;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree tree = testTree();
+        Service service = new Service(tree);
+
+        System.out.println(tree);
+
+        service.sortByName();
+        System.out.println("Сортировка по имени");
+        System.out.println(tree);
+
+        service.sortByBirthDate();
+        System.out.println("Сортировка по дате рождения");
         System.out.println(tree);
     }
 

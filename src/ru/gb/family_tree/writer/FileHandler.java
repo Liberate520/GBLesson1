@@ -4,8 +4,7 @@ import ru.gb.family_tree.family_tree.FamilyTree;
 
 import java.io.*;
 
-
-public class FileHandler extends Writer {
+public class FileHandler implements ru.gb.family_tree.writer.Writer {
     public static void saveToFile(FamilyTree familyTree, String fileName) throws IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
             out.writeObject(familyTree);

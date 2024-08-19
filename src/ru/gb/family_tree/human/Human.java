@@ -12,9 +12,11 @@ public class Human implements Serializable {
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deadDate;
+    int age;
     private Human mother;
     private Human father;
     private List<Human> children;
+
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deadDate, Human mother, Human father) {
         id = -1;
@@ -82,6 +84,14 @@ public class Human implements Serializable {
         } else {
             int age = Period.between(birthDate, currentDate).getYears();
             return "age: " + age;
+        }
+    }
+
+    public void setAge(LocalDate currentDate) {
+        if (deadDate == null) {
+            this.age = Period.between(birthDate, currentDate).getYears();
+        } else {
+            this.age = Period.between(birthDate, deadDate).getYears();
         }
     }
 

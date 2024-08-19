@@ -85,6 +85,14 @@ public class FamilyTree implements Serializable {
         return null;
     }
 
+    public List<Human> getHumanList() {
+        return humanList;
+    }
+
+    public void setHumanList(List<Human> humanList) {
+        this.humanList = humanList;
+    }
+
     @Override
     public String toString() {return getInfo();}
 
