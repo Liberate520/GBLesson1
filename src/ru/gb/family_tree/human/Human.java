@@ -1,12 +1,14 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.family_tree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements FamilyTreeItem<Human>, Serializable {
     private long id;
     private String name;
     private Gender gender;
@@ -18,23 +20,9 @@ public class Human implements Serializable {
     private List<Human> children;
 
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deadDate, Human mother, Human father) {
+    public Human() {
         id = -1;
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.deadDate = deadDate;
-        this.mother = mother;
-        this.father = father;
         children = new ArrayList<>();
-    }
-
-    public Human(String name, Gender gender, LocalDate birthDate) {
-        this(name, gender, birthDate, null, null, null);
-    }
-
-    public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father) {
-        this(name, gender, birthDate, null, mother, father);
     }
 
     public boolean addChild(Human child) {
@@ -46,6 +34,9 @@ public class Human implements Serializable {
     }
 
     public boolean addParent(Human parent) {
+        if (parent == null || parent.getGender() == null) {
+            return false;
+        }
         if(parent.getGender().equals(Gender.male)) {
             setFather(parent);
         } else if (parent.getGender().equals(Gender.female)) {

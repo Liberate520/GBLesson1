@@ -15,14 +15,10 @@ public class Service {
     }
 
     public void sortByName() {
-        List<Human> humans = familyTree.getHumanList();
-        Collections.sort(humans, Comparator.comparing(Human::getName));
-        familyTree.setHumanList(humans);
+        familyTree.sortByName();
     }
 
     public void sortByBirthDate() {
-        List<Human> humans = familyTree.getHumanList();
-        Collections.sort(humans, Comparator.comparing(Human::getBirthDate).reversed());
-        familyTree.setHumanList(humans);
+        familyTree.sortByBirthDate();
     }
 }

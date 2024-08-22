@@ -3,7 +3,7 @@ package ru.gb.family_tree;
 import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
-//import ru.gb.family_tree.human.HumanBuilder;
+import ru.gb.family_tree.human.HumanBuilder;
 import ru.gb.family_tree.service.Service;
 
 import java.time.LocalDate;
@@ -11,15 +11,14 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         FamilyTree tree = testTree();
-        Service service = new Service(tree);
 
         System.out.println(tree);
 
-        service.sortByName();
+        tree.sortByName();
         System.out.println("Сортировка по имени");
         System.out.println(tree);
 
-        service.sortByBirthDate();
+        tree.sortByBirthDate();
         System.out.println("Сортировка по дате рождения");
         System.out.println(tree);
     }
@@ -27,26 +26,74 @@ public class Main {
     public static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
-        Human masha = new Human("Мария", Gender.female, LocalDate.of(1990, 8, 17));
-        Human sasha = new Human("Александр", Gender.male, LocalDate.of(1986, 6, 18));
-        Human tanya = new Human("Татьяна", Gender.female, LocalDate.of(1982, 5, 23));
-        Human sergey = new Human("Сергей", Gender.male, LocalDate.of(1978, 6, 8));
+        Human masha = new HumanBuilder()
+                .setName("Мария")
+                .setGender(Gender.female)
+                .setBirthDate(LocalDate.of(1990, 8, 17))
+                .build();
+
+        Human sasha = new HumanBuilder()
+                .setName("Александр")
+                .setGender(Gender.male)
+                .setBirthDate(LocalDate.of(1986, 6, 18))
+                .build();
+
+        Human tanya = new HumanBuilder()
+                .setName("Татьяна")
+                .setGender(Gender.female)
+                .setBirthDate(LocalDate.of(1982, 5, 23))
+                .build();
+
+        Human sergey = new HumanBuilder()
+                .setName("Сергей")
+                .setGender(Gender.male)
+                .setBirthDate(LocalDate.of(1978, 6, 8))
+                .build();
 
         tree.addHuman(masha);
         tree.addHuman(sasha);
         tree.addHuman(tanya);
         tree.addHuman(sergey);
 
-        Human veronika = new Human("Вероника", Gender.female, LocalDate.of(2022, 5, 24), masha, sasha);
-        Human luka = new Human("Лука", Gender.male, LocalDate.of(2016, 6, 19), tanya, sergey);
-        Human nikita = new Human("Никита", Gender.male, LocalDate.of(2009, 11, 23), tanya, sergey);
+        Human veronika = new HumanBuilder()
+                .setName("Вероника")
+                .setGender(Gender.female)
+                .setBirthDate(LocalDate.of(2022, 5, 24))
+                .setMother(masha)
+                .setFather(sasha)
+                .build();
+
+        Human luka = new HumanBuilder()
+                .setName("Лука")
+                .setGender(Gender.male)
+                .setBirthDate(LocalDate.of(2016, 6, 19))
+                .setMother(tanya)
+                .setFather(sergey)
+                .build();
+
+        Human nikita = new HumanBuilder()
+                .setName("Никита")
+                .setGender(Gender.male)
+                .setBirthDate(LocalDate.of(2009, 11, 23))
+                .setMother(tanya)
+                .setFather(sergey)
+                .build();
 
         tree.addHuman(veronika);
         tree.addHuman(luka);
         tree.addHuman(nikita);
 
-        Human grandMother = new Human("Наталья", Gender.female, LocalDate.of(1960, 6, 21));
-        Human grandFather = new Human("Виктор", Gender.male, LocalDate.of(1960, 7, 2));
+        Human grandMother = new HumanBuilder()
+                .setName("Наталья")
+                .setGender(Gender.female)
+                .setBirthDate(LocalDate.of(1960, 6, 21))
+                .build();
+
+        Human grandFather = new HumanBuilder()
+                .setName("Виктор")
+                .setGender(Gender.male)
+                .setBirthDate(LocalDate.of(1960, 7, 2))
+                .build();
 
         grandMother.addChild(sasha);
         grandFather.addChild(sasha);
@@ -56,8 +103,17 @@ public class Main {
         tree.addHuman(grandMother);
         tree.addHuman(grandFather);
 
-        Human grandMother1 = new Human("Нина", Gender.female, LocalDate.of(1944, 4, 19));
-        Human grandFather1 = new Human("Вячеслав", Gender.male, LocalDate.of(1944, 6, 13));
+        Human grandMother1 = new HumanBuilder()
+                .setName("Нина")
+                .setGender(Gender.female)
+                .setBirthDate(LocalDate.of(1944, 4, 19))
+                .build();
+
+        Human grandFather1 = new HumanBuilder()
+                .setName("Вячеслав")
+                .setGender(Gender.male)
+                .setBirthDate(LocalDate.of(1944, 6, 13))
+                .build();
 
         grandMother1.addChild(sergey);
         grandFather1.addChild(sergey);
