@@ -1,19 +1,33 @@
 package ru.gb.family_tree.writer;
 
-import ru.gb.family_tree.family_tree.FamilyTree;
-
 import java.io.*;
 
 public class FileHandler implements Writer {
-    public void saveToFile(FamilyTree familyTree, String fileName) throws IOException {
+    private String fileName;
+
+    public FileHandler(String fileName) {
+        this.fileName = fileName;
+    }
+
+    @Override
+    public boolean saveFile(Serializable serializable) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            out.writeObject(familyTree);
+            out.writeObject(serializable);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public FamilyTree loadFromFile(String fileName) throws IOException, ClassNotFoundException {
+    @Override
+    public Object readFile() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
-            return (FamilyTree) in.readObject();
+            return in.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }
+

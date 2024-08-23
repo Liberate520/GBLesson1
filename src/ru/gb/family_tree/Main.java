@@ -5,12 +5,16 @@ import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.human.HumanBuilder;
 import ru.gb.family_tree.service.Service;
+import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
 
 public class Main {
+    final static String fileName = "src/ru/gb/family_tree/writer/family_tree.txt";
     public static void main(String[] args) {
-        FamilyTree tree = testTree();
+        FamilyTree tree = load();
+//        FamilyTree tree = testTree();
+        saveFile(tree);
 
         System.out.println(tree);
 
@@ -18,9 +22,18 @@ public class Main {
         System.out.println("Сортировка по имени");
         System.out.println(tree);
 
-        tree.sortByBirthDate();
+        tree.sortByBirthDay();
         System.out.println("Сортировка по дате рождения");
         System.out.println(tree);
+    }
+    private static FamilyTree<Human> load(){
+        FileHandler fileHandler = new FileHandler(fileName);
+        return (FamilyTree<Human>) fileHandler.readFile();
+    }
+
+    public static void saveFile(FamilyTree familyTree) {
+        FileHandler fileHandler = new FileHandler(fileName);
+        fileHandler.saveFile(familyTree);
     }
 
     public static FamilyTree testTree() {

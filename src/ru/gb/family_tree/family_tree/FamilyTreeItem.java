@@ -2,13 +2,13 @@ package ru.gb.family_tree.family_tree;
 
 import java.util.List;
 
-public interface FamilyTreeItem extends Comparable<FamilyTreeItem> {
-    long getId();
-    void setId(long id);
+public interface FamilyTreeItem<T> extends Comparable<T> {
+    int getAge();
     String getName();
-    java.time.LocalDate getBirthDate();
-    List<? extends FamilyTreeItem> getParents();
-    List<? extends FamilyTreeItem> getChildren();
-    boolean addChild(FamilyTreeItem child);
-    boolean addParent(FamilyTreeItem parent);
+    void setId(long id);
+    List<T> getParents();
+    void addChild(T child);
+    List<T> getChildren();
+    void addParent(T parent);
+    long getId();
 }

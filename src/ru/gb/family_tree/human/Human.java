@@ -14,7 +14,6 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deadDate;
-    int age;
     private Human mother;
     private Human father;
     private List<Human> children;
@@ -25,24 +24,23 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
         children = new ArrayList<>();
     }
 
-    public boolean addChild(Human child) {
-        if(!children.contains(child)) {
+    @Override
+    public void addChild(Human child) {
+        if (!children.contains(child)) {
             children.add(child);
-            return true;
         }
-        return false;
     }
 
-    public boolean addParent(Human parent) {
+    @Override
+    public void addParent(Human parent) {
         if (parent == null || parent.getGender() == null) {
-            return false;
+            return;
         }
-        if(parent.getGender().equals(Gender.male)) {
+        if (parent.getGender().equals(Gender.male)) {
             setFather(parent);
         } else if (parent.getGender().equals(Gender.female)) {
             setMother(parent);
         }
-        return true;
     }
 
     public void setGender(Gender gender) {this.gender = gender;}
@@ -51,7 +49,7 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
 
     public void setMother(Human mother) {this.mother = mother;}
 
-    public  void setFather(Human father) {this.father = father;}
+    public void setFather(Human father) {this.father = father;}
 
     public Human getMother() {return mother;}
 
@@ -68,24 +66,21 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
         return  list;
     }
 
-    LocalDate currentDate = LocalDate.now();
-    public String getAge(LocalDate currentDate) {
+    @Override
+    public int getAge() {
         if (deadDate != null) {
-            return "died on: " + deadDate.toString();
+            return getPeriod(birthDate, LocalDate.now());
         } else {
-            int age = Period.between(birthDate, currentDate).getYears();
-            return "age: " + age;
+            return getPeriod(birthDate, deadDate);
         }
     }
 
-    public void setAge(LocalDate currentDate) {
-        if (deadDate == null) {
-            this.age = Period.between(birthDate, currentDate).getYears();
-        } else {
-            this.age = Period.between(birthDate, deadDate).getYears();
-        }
+    private int getPeriod(LocalDate birthDate, LocalDate deadDate) {
+        Period diff = Period.between(birthDate, deadDate);
+        return diff.getYears();
     }
 
+    @Override
     public String getName() {return name;}
 
     public long getId() {return id;}
@@ -105,6 +100,11 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
     public Gender getGender() {return gender;}
 
     @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
+    }
+
+    @Override
     public String toString() {
         return getInfo();
     }
@@ -117,8 +117,8 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
         sb.append(name);
         sb.append(", gender: ");
         sb.append(getGender());
-        sb.append(", ");
-        sb.append(getAge(currentDate));
+        sb.append(", age: ");
+        sb.append(getAge());
         sb.append(", ");
         sb.append(getMotherInfo());
         sb.append(", ");
