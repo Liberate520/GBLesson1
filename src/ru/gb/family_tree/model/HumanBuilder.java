@@ -1,4 +1,4 @@
-package ru.gb.family_tree.human;
+package ru.gb.family_tree.model;
 
 import java.time.LocalDate;
 
@@ -7,8 +7,8 @@ public class HumanBuilder {
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deadDate;
-    private Human mother;
-    private Human father;
+    private ru.gb.family_tree.model.Human mother;
+    private ru.gb.family_tree.model.Human father;
 
     public HumanBuilder setName(String name) {
         this.name = name;
@@ -30,18 +30,18 @@ public class HumanBuilder {
         return this;
     }
 
-    public HumanBuilder setMother(Human mother) {
+    public HumanBuilder setMother(ru.gb.family_tree.model.Human mother) {
         this.mother = mother;
         return this;
     }
 
-    public HumanBuilder setFather(Human father) {
+    public HumanBuilder setFather(ru.gb.family_tree.model.Human father) {
         this.father = father;
         return this;
     }
 
-    public Human build() {
-        Human human = new Human();
+    public ru.gb.family_tree.model.Human build() {
+        ru.gb.family_tree.model.Human human = new ru.gb.family_tree.model.Human();
         human.setName(this.name);
         human.setGender(this.gender);
         human.setBirthDate(this.birthDate);

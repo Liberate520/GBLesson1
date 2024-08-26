@@ -1,30 +1,64 @@
 package ru.gb.family_tree;
 
 import ru.gb.family_tree.family_tree.FamilyTree;
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.human.HumanBuilder;
-import ru.gb.family_tree.service.Service;
+import ru.gb.family_tree.model.Gender;
+import ru.gb.family_tree.model.Human;
+import ru.gb.family_tree.model.Service;
+import ru.gb.family_tree.view.ConsoleUI;
+import ru.gb.family_tree.view.View;
 import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Main {
     final static String fileName = "src/ru/gb/family_tree/writer/family_tree.txt";
     public static void main(String[] args) {
-        FamilyTree tree = load();
+        Service service = new Service();
+        service.addHuman("Мария", Gender.female, LocalDate.of(1990, 8, 17), null, null, null, new ArrayList<>());
+        service.addHuman("Александр", Gender.male, LocalDate.of(1986, 6, 18), null, null, null, new ArrayList<>());
+        service.addHuman("Татьяна", Gender.female, LocalDate.of(1982, 5, 23), null, null, null, new ArrayList<>());
+        service.addHuman("Сергей", Gender.male, LocalDate.of(1978, 6, 8), null, null, null, new ArrayList<>());
+        Human masha = service.getByName("Мария").get(0);
+        Human sasha = service.getByName("Александр").get(0);
+        service.addHuman("Вероника", Gender.female, LocalDate.of(2022, 5, 24), null, masha, sasha, new ArrayList<>());
+        Human tanya = service.getByName("Татьяна").get(0);
+        Human sergey = service.getByName("Сергей").get(0);
+        service.addHuman("Лука", Gender.male, LocalDate.of(2016, 6, 19), null, tanya, sergey, new ArrayList<>());
+        service.addHuman("Никита", Gender.male, LocalDate.of(2009, 11, 23), null, tanya, sergey, new ArrayList<>());
+        service.addHuman("Наталья", Gender.female, LocalDate.of(1960, 6, 21), null, null, null, new ArrayList<>());
+        service.addHuman("Виктор", Gender.male, LocalDate.of(1960, 7, 2), null, null, null, new ArrayList<>());
+        Human natasha = service.getByName("Наталья").get(0);
+        Human viktor = service.getByName("Виктор").get(0);
+        natasha.addChild(sasha);
+        natasha.addChild(tanya);
+        viktor.addChild(sasha);
+        viktor.addChild(tanya);
+        service.addHuman("Нина", Gender.female, LocalDate.of(1944, 4, 19), null, null, null, new ArrayList<>());
+        service.addHuman("Вячеслав", Gender.male, LocalDate.of(1944, 6, 13), null, null, null, new ArrayList<>());
+        Human nina = service.getByName("Нина").get(0);
+        Human vyacheslav = service.getByName("Вячеслав").get(0);
+        nina.addChild(sergey);
+        vyacheslav.addChild(sergey);
+
+        System.out.println(service.getHumanListInfo());
+
+        View view = new ConsoleUI();
+        view.start();
+
+//        FamilyTree tree = load();
 //        FamilyTree tree = testTree();
-        saveFile(tree);
+//        saveFile(tree);
 
-        System.out.println(tree);
+//        System.out.println(tree);
 
-        tree.sortByName();
+        service.sortByName();
         System.out.println("Сортировка по имени");
-        System.out.println(tree);
+        System.out.println(service);
 
-        tree.sortByBirthDay();
+        service.sortByBirthDay();
         System.out.println("Сортировка по дате рождения");
-        System.out.println(tree);
+        System.out.println(service);
     }
     private static FamilyTree<Human> load(){
         FileHandler fileHandler = new FileHandler(fileName);
@@ -34,105 +68,5 @@ public class Main {
     public static void saveFile(FamilyTree familyTree) {
         FileHandler fileHandler = new FileHandler(fileName);
         fileHandler.saveFile(familyTree);
-    }
-
-    public static FamilyTree testTree() {
-        FamilyTree tree = new FamilyTree();
-
-        Human masha = new HumanBuilder()
-                .setName("Мария")
-                .setGender(Gender.female)
-                .setBirthDate(LocalDate.of(1990, 8, 17))
-                .build();
-
-        Human sasha = new HumanBuilder()
-                .setName("Александр")
-                .setGender(Gender.male)
-                .setBirthDate(LocalDate.of(1986, 6, 18))
-                .build();
-
-        Human tanya = new HumanBuilder()
-                .setName("Татьяна")
-                .setGender(Gender.female)
-                .setBirthDate(LocalDate.of(1982, 5, 23))
-                .build();
-
-        Human sergey = new HumanBuilder()
-                .setName("Сергей")
-                .setGender(Gender.male)
-                .setBirthDate(LocalDate.of(1978, 6, 8))
-                .build();
-
-        tree.addHuman(masha);
-        tree.addHuman(sasha);
-        tree.addHuman(tanya);
-        tree.addHuman(sergey);
-
-        Human veronika = new HumanBuilder()
-                .setName("Вероника")
-                .setGender(Gender.female)
-                .setBirthDate(LocalDate.of(2022, 5, 24))
-                .setMother(masha)
-                .setFather(sasha)
-                .build();
-
-        Human luka = new HumanBuilder()
-                .setName("Лука")
-                .setGender(Gender.male)
-                .setBirthDate(LocalDate.of(2016, 6, 19))
-                .setMother(tanya)
-                .setFather(sergey)
-                .build();
-
-        Human nikita = new HumanBuilder()
-                .setName("Никита")
-                .setGender(Gender.male)
-                .setBirthDate(LocalDate.of(2009, 11, 23))
-                .setMother(tanya)
-                .setFather(sergey)
-                .build();
-
-        tree.addHuman(veronika);
-        tree.addHuman(luka);
-        tree.addHuman(nikita);
-
-        Human grandMother = new HumanBuilder()
-                .setName("Наталья")
-                .setGender(Gender.female)
-                .setBirthDate(LocalDate.of(1960, 6, 21))
-                .build();
-
-        Human grandFather = new HumanBuilder()
-                .setName("Виктор")
-                .setGender(Gender.male)
-                .setBirthDate(LocalDate.of(1960, 7, 2))
-                .build();
-
-        grandMother.addChild(sasha);
-        grandFather.addChild(sasha);
-        grandMother.addChild(tanya);
-        grandFather.addChild(tanya);
-
-        tree.addHuman(grandMother);
-        tree.addHuman(grandFather);
-
-        Human grandMother1 = new HumanBuilder()
-                .setName("Нина")
-                .setGender(Gender.female)
-                .setBirthDate(LocalDate.of(1944, 4, 19))
-                .build();
-
-        Human grandFather1 = new HumanBuilder()
-                .setName("Вячеслав")
-                .setGender(Gender.male)
-                .setBirthDate(LocalDate.of(1944, 6, 13))
-                .build();
-
-        grandMother1.addChild(sergey);
-        grandFather1.addChild(sergey);
-        tree.addHuman(grandMother1);
-        tree.addHuman(grandFather1);
-
-        return  tree;
     }
 }
