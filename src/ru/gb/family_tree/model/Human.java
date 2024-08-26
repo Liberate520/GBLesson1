@@ -1,6 +1,4 @@
-package ru.gb.family_tree.human;
-
-import ru.gb.family_tree.family_tree.FamilyTreeItem;
+package ru.gb.family_tree.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -69,9 +67,9 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
     @Override
     public int getAge() {
         if (deadDate != null) {
-            return getPeriod(birthDate, LocalDate.now());
-        } else {
             return getPeriod(birthDate, deadDate);
+        } else {
+            return getPeriod(birthDate,LocalDate.now());
         }
     }
 

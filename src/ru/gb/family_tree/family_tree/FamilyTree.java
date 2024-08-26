@@ -1,5 +1,9 @@
 package ru.gb.family_tree.family_tree;
 
+import ru.gb.family_tree.model.FamilyTreeItem;
+import ru.gb.family_tree.model.FamilyTreeIterator;
+import ru.gb.family_tree.model.HumanComparatorByBirthDay;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -93,7 +97,7 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Iterable<E>, Ser
         StringBuilder sb = new StringBuilder();
         sb.append("Семейное дерево:\n");
         sb.append(humanList.size());
-        sb.append(" позиции.\n");
+        sb.append(" позиций.\n");
         for (E human : humanList) {
             sb.append(human);
             sb.append("\n");
@@ -110,6 +114,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Iterable<E>, Ser
     }
 
     public void sortByBirthDay() {
-        Collections.sort(humanList, new HumanComparatorByBirthDay());
+        Collections.sort(humanList, new HumanComparatorByBirthDay<>());
     }
 }
