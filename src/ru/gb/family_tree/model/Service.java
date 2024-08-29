@@ -2,6 +2,7 @@ package ru.gb.family_tree.model;
 
 import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.writer.FileHandler;
+import ru.gb.family_tree.writer.Writer;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public class Service {
     private HumanBuilder builder;
     private FamilyTree<Human> familyTree;
-    private FileHandler fileHandler;
+    private Writer fileHandler;
 
     public Service() {
         fileHandler = new FileHandler("src/ru/gb/family_tree/writer/family_tree.txt");
@@ -79,8 +80,11 @@ public class Service {
         return fileHandler.saveFile(familyTree);
     }
 
-    public FamilyTree<Human> loadFamilyTree(String fileName) {
+    public void loadFamilyTree(String fileName) {
         fileHandler = new FileHandler(fileName);
-        return (FamilyTree<Human>) fileHandler.readFile();
+        FamilyTree<Human> loadedTree = (FamilyTree<Human>) fileHandler.readFile();
+        if (loadedTree != null) {
+            this.familyTree = loadedTree;
+        }
     }
 }

@@ -2,6 +2,7 @@ package ru.gb.family_tree.view;
 
 import ru.gb.family_tree.model.Gender;
 import ru.gb.family_tree.model.Human;
+import ru.gb.family_tree.model.HumanBuilder;
 import ru.gb.family_tree.presenter.Presenter;
 
 import java.time.LocalDate;
@@ -53,37 +54,45 @@ public class ConsoleUI implements View{
     }
 
     public void addHuman() {
+        HumanBuilder builder = new HumanBuilder();
         System.out.println("Введите имя члена семьи: ");
         String name = scanner.nextLine();
+        builder.setName(name);
         System.out.println("Введите пол члена семьи (male/female): ");
-        Gender gender = Gender.valueOf(scanner.nextLine().trim().toUpperCase());;
+        Gender gender = Gender.valueOf(scanner.nextLine().trim().toUpperCase());
+        builder.setGender(gender);
         System.out.println("Введите дату рождения члена семьи (в формате 'yyyy-mm-dd'): ");
         String strBirth = scanner.nextLine();
         LocalDate birthDate = LocalDate.parse(strBirth);
+        builder.setBirthDate(birthDate);
         System.out.println("Введите дату смерти члена семьи (в формате 'yyyy-mm-dd') или пропустите поле ввода");
         String strDead = scanner.nextLine();
-        LocalDate deadDate = null;
         if (!strDead.isEmpty()) {
-            deadDate = LocalDate.parse(strDead);
+            LocalDate deadDate = LocalDate.parse(strDead);
+            builder.setDeadDate(deadDate);
         }
         System.out.println("Введите имя Мамы: ");
-        String mother = scanner.nextLine();
-        Human motherN = getHumanByName(mother);
+        String motherName = scanner.nextLine();
+        Human mother = getHumanByName(motherName);
+        builder.setMother(mother);
         System.out.println("Введите имя Папы: ");
-        String father = scanner.nextLine();
-        Human fatherN = getHumanByName(father);
+        String fatherName = scanner.nextLine();
+        Human father = getHumanByName(fatherName);
+        builder.setFather(father);
+        Human newHuman = builder.build();
+
         System.out.println("Введите имя ребенка(детей): ");
         String childrenNames = scanner.nextLine();
-        List<Human> childrenN = new ArrayList<>();
+        List<Human> children = new ArrayList<>();
         if (!childrenNames.isEmpty()) {
             for (String childName : childrenNames.split(",")) {
                 Human child = getHumanByName(childName.trim());
                 if (child != null) {
-                    childrenN.add(child);
+                    children.add(child);
                 }
             }
         }
-        presenter.addHuman(name, gender, birthDate, deadDate, motherN, fatherN, childrenN);
+        presenter.addHuman(newHuman.getName(), newHuman.getGender(), newHuman.getBirthDate(), newHuman.getDeadDate(), newHuman.getMother(), newHuman.getFather(), children);
     }
 
     private Human getHumanByName(String name) {

@@ -15,7 +15,6 @@ public class Main {
     final static String fileName = "src/ru/gb/family_tree/writer/family_tree.txt";
     public static void main(String[] args) {
         Service service = new Service();
-
         service.setFamilyTree(load());
 
         service.addHuman("Мария", Gender.FEMALE, LocalDate.of(1990, 8, 17), null, null, null, new ArrayList<>());
@@ -44,7 +43,8 @@ public class Main {
         nina.addChild(sergey);
         vyacheslav.addChild(sergey);
 
-//        saveFile(service.getFamilyTree());
+//4
+
 
         View view = new ConsoleUI();
         view.start();
