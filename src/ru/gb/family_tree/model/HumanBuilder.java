@@ -7,8 +7,8 @@ public class HumanBuilder {
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deadDate;
-    private ru.gb.family_tree.model.Human mother;
-    private ru.gb.family_tree.model.Human father;
+    private Human mother;
+    private Human father;
 
     public HumanBuilder setName(String name) {
         this.name = name;
@@ -30,18 +30,18 @@ public class HumanBuilder {
         return this;
     }
 
-    public HumanBuilder setMother(ru.gb.family_tree.model.Human mother) {
+    public HumanBuilder setMother(Human mother) {
         this.mother = mother;
         return this;
     }
 
-    public HumanBuilder setFather(ru.gb.family_tree.model.Human father) {
+    public HumanBuilder setFather(Human father) {
         this.father = father;
         return this;
     }
 
-    public ru.gb.family_tree.model.Human build() {
-        ru.gb.family_tree.model.Human human = new ru.gb.family_tree.model.Human();
+    public Human build() {
+        Human human = new Human();
         human.setName(this.name);
         human.setGender(this.gender);
         human.setBirthDate(this.birthDate);

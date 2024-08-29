@@ -14,11 +14,12 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        this.service = new Service();
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate, LocalDate deadDate, Human mother, Human father, List<Human> children) {
         service.addHuman(name, gender, birthDate, deadDate, mother, father, children);
+        service.saveFamilyTree("src/ru/gb/family_tree/writer/family_tree.txt");
         getHumanListInfo();
     }
 

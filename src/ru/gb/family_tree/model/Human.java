@@ -34,9 +34,9 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
         if (parent == null || parent.getGender() == null) {
             return;
         }
-        if (parent.getGender().equals(Gender.male)) {
+        if (parent.getGender().equals(Gender.MALE)) {
             setFather(parent);
-        } else if (parent.getGender().equals(Gender.female)) {
+        } else if (parent.getGender().equals(Gender.FEMALE)) {
             setMother(parent);
         }
     }

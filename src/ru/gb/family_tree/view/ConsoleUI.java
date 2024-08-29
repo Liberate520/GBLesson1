@@ -14,6 +14,7 @@ public class ConsoleUI implements View{
     private Presenter presenter;
     private boolean work;
     private MainMenu menu;
+    private final String fileName = "src/ru/gb/family_tree/writer/family_tree.txt";
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
@@ -59,9 +60,12 @@ public class ConsoleUI implements View{
         System.out.println("Введите дату рождения члена семьи (в формате 'yyyy-mm-dd'): ");
         String strBirth = scanner.nextLine();
         LocalDate birthDate = LocalDate.parse(strBirth);
-        System.out.println("Введите дату смерти члена семьи (в формате 'yyyy-mm-dd'): ");
+        System.out.println("Введите дату смерти члена семьи (в формате 'yyyy-mm-dd') или пропустите поле ввода");
         String strDead = scanner.nextLine();
-        LocalDate deadDate = LocalDate.parse(strDead);
+        LocalDate deadDate = null;
+        if (!strDead.isEmpty()) {
+            deadDate = LocalDate.parse(strDead);
+        }
         System.out.println("Введите имя Мамы: ");
         String mother = scanner.nextLine();
         Human motherN = getHumanByName(mother);
@@ -69,7 +73,6 @@ public class ConsoleUI implements View{
         String father = scanner.nextLine();
         Human fatherN = getHumanByName(father);
         System.out.println("Введите имя ребенка(детей): ");
-        String children = scanner.nextLine();
         String childrenNames = scanner.nextLine();
         List<Human> childrenN = new ArrayList<>();
         if (!childrenNames.isEmpty()) {
@@ -79,9 +82,8 @@ public class ConsoleUI implements View{
                     childrenN.add(child);
                 }
             }
-
-            presenter.addHuman(name, gender, birthDate, deadDate, motherN, fatherN, childrenN);
         }
+        presenter.addHuman(name, gender, birthDate, deadDate, motherN, fatherN, childrenN);
     }
 
     private Human getHumanByName(String name) {
