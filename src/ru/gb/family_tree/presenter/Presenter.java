@@ -4,6 +4,7 @@ import ru.gb.family_tree.model.Gender;
 import ru.gb.family_tree.model.Human;
 import ru.gb.family_tree.model.Service;
 import ru.gb.family_tree.view.View;
+import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,12 +15,14 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        this.service = new Service();
+        String fileName = "src/ru/gb/family_tree/writer/family_tree.txt";  // Указываем путь к файлу
+        this.service = new Service(new FileHandler(fileName));  // Передаем FileHandler в Service
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate, LocalDate deadDate, Human mother, Human father, List<Human> children) {
         service.addHuman(name, gender, birthDate, deadDate, mother, father, children);
-        service.saveFamilyTree("src/ru/gb/family_tree/writer/family_tree.txt");
+        String fileName = "src/ru/gb/family_tree/writer/family_tree.txt";  // Путь к файлу
+        service.saveFamilyTree(fileName);  // Передаем путь к файлу
         getHumanListInfo();
     }
 

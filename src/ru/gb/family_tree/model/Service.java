@@ -1,9 +1,7 @@
 package ru.gb.family_tree.model;
 
 import ru.gb.family_tree.family_tree.FamilyTree;
-import ru.gb.family_tree.writer.FileHandler;
 import ru.gb.family_tree.writer.Writer;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,14 +10,19 @@ public class Service {
     private FamilyTree<Human> familyTree;
     private Writer fileHandler;
 
-    public Service() {
-        fileHandler = new FileHandler("src/ru/gb/family_tree/writer/family_tree.txt");
-        familyTree = (FamilyTree<Human>) fileHandler.readFile();
+    public Service(Writer fileHandler) {
+        this.fileHandler = fileHandler;
+        this.familyTree = (FamilyTree<Human>) fileHandler.readFile();
         if (familyTree == null) {
             familyTree = new FamilyTree<>();
         }
         builder = new HumanBuilder();
     }
+
+    public void setFileHandler(Writer fileHandler) {
+        this.fileHandler = fileHandler;
+    }
+
     public FamilyTree<Human> getFamilyTree() {
         return familyTree;
     }
@@ -42,6 +45,12 @@ public class Service {
             for (Human child : children) {
                 human.addChild(child);
             }
+        }
+        if (mother != null) {
+            mother.addChild(human);
+        }
+        if (father != null) {
+            father.addChild(human);
         }
 
         familyTree.addHuman(human);
@@ -76,12 +85,10 @@ public class Service {
     }
 
     public boolean saveFamilyTree(String fileName) {
-        fileHandler = new FileHandler(fileName);
         return fileHandler.saveFile(familyTree);
     }
 
     public void loadFamilyTree(String fileName) {
-        fileHandler = new FileHandler(fileName);
         FamilyTree<Human> loadedTree = (FamilyTree<Human>) fileHandler.readFile();
         if (loadedTree != null) {
             this.familyTree = loadedTree;

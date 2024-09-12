@@ -54,6 +54,13 @@ public class ConsoleUI implements View{
     }
 
     public void addHuman() {
+        Human newHuman = createHuman();
+        setParents(newHuman);
+        setChildren(newHuman);
+        presenter.addHuman(newHuman.getName(), newHuman.getGender(), newHuman.getBirthDate(), newHuman.getDeadDate(), newHuman.getMother(), newHuman.getFather(), newHuman.getChildren());
+    }
+
+    private Human createHuman() {
         HumanBuilder builder = new HumanBuilder();
         System.out.println("Введите имя члена семьи: ");
         String name = scanner.nextLine();
@@ -71,16 +78,22 @@ public class ConsoleUI implements View{
             LocalDate deadDate = LocalDate.parse(strDead);
             builder.setDeadDate(deadDate);
         }
+        return builder.build();
+    }
+
+    private void setParents(Human newHuman) {
         System.out.println("Введите имя Мамы: ");
         String motherName = scanner.nextLine();
         Human mother = getHumanByName(motherName);
-        builder.setMother(mother);
+        newHuman.setMother(mother);
+
         System.out.println("Введите имя Папы: ");
         String fatherName = scanner.nextLine();
         Human father = getHumanByName(fatherName);
-        builder.setFather(father);
-        Human newHuman = builder.build();
+        newHuman.setFather(father);
+    }
 
+    private void setChildren(Human newHuman) {
         System.out.println("Введите имя ребенка(детей): ");
         String childrenNames = scanner.nextLine();
         List<Human> children = new ArrayList<>();
@@ -92,7 +105,7 @@ public class ConsoleUI implements View{
                 }
             }
         }
-        presenter.addHuman(newHuman.getName(), newHuman.getGender(), newHuman.getBirthDate(), newHuman.getDeadDate(), newHuman.getMother(), newHuman.getFather(), children);
+        newHuman.setChildren(children);
     }
 
     private Human getHumanByName(String name) {

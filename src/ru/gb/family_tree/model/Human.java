@@ -53,6 +53,10 @@ public class Human implements FamilyTreeItem<Human>, Serializable {
 
     public Human getFather() {return father;}
 
+    public void setChildren(List<Human> children) {
+        this.children = children;
+    }
+
     public List<Human> getParents() {
         List<Human> list = new ArrayList<>(2);
         if(father != null) {
