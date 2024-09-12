@@ -1,0 +1,14 @@
+package ru.gb.family_tree.model;
+
+import java.util.List;
+
+public interface FamilyTreeItem<T> extends Comparable<T> {
+    int getAge();
+    String getName();
+    void setId(long id);
+    List<T> getParents();
+    void addChild(T child);
+    List<T> getChildren();
+    void addParent(T parent);
+    long getId();
+}
